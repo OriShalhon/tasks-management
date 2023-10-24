@@ -4,19 +4,24 @@ import './SideBar.css';
 import { IconContext } from 'react-icons';
 import DayNightToggle from 'react-day-and-night-toggle'
 
-const Sidebar: React.FC = () => {
+interface Props {
+    isDarkMode: boolean,
+    onChangeDarkMode: () => void,
+    projects: string[],
+    onAddProject: (newProject: string) => void
+}
+const Sidebar: React.FC<Props> = ({ isDarkMode, onChangeDarkMode, projects, onAddProject}) => {
+                                
     const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(true);
-    const [projects, setProjects] = useState<string[]>(['ProjectA', 'ProjectB', 'ProjectC']);
     const [newProject, setNewProject] = useState<string>('');
-    const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
-
+   
     const toggleSidebar = () => {
         setIsSidebarVisible(!isSidebarVisible);
     };
 
     const addProject = () => {
         if (newProject) {
-            setProjects([...projects, newProject]);
+            onAddProject(newProject);
             setNewProject('');
         }
     };
@@ -44,9 +49,8 @@ const Sidebar: React.FC = () => {
                                 <li key={index}>{project}</li>
                             ))}
                         </ul>
-
                         <DayNightToggle
-                            onChange={() => setIsDarkMode(!isDarkMode)}
+                            onChange={onChangeDarkMode}
                             checked={isDarkMode}
                         />
                     </div>
