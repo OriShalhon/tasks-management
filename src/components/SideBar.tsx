@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import * as FaIcons from 'react-icons/fa';
 import './SideBar.css';
 import { IconContext } from 'react-icons';
-import DayNightToggle from 'react-day-and-night-toggle'
+import  { DarkModeSwitch } from 'react-toggle-dark-mode';
 
 interface Props {
     isDarkMode: boolean,
@@ -49,9 +49,10 @@ const Sidebar: React.FC<Props> = ({ isDarkMode, onChangeDarkMode, projects, onAd
                                 <li key={index}>{project}</li>
                             ))}
                         </ul>
-                        <DayNightToggle
+                        <DarkModeSwitch
                             onChange={onChangeDarkMode}
                             checked={isDarkMode}
+                            size={20}
                         />
                     </div>
             </IconContext.Provider>
