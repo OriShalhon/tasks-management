@@ -7,10 +7,6 @@ import { TaskProps } from './components/Task';
 import { ProjectTasksProps } from './components/ProjectTasks';
 
 function App() {
-    const [darkMode, setDarkMode] = useState<boolean>(false);
-    const [projects, setProjects] = useState<string[]>(['ProjectA',
-                                                        'ProjectB',
-                                                        'ProjectC']);
 //place holders for later actual data
     const taskData1 = {
         id: 1,
@@ -45,39 +41,48 @@ function App() {
     }
 
     const projectTasks1: ProjectTasksProps = {
-        project: 1,
+        id: 1,
         tasks: [taskData1, taskData2],
         projectName: 'ProjectA'
     }
 
     const projectTasks2: ProjectTasksProps = {
-        project: 2,
+        id: 2,
         tasks: [taskData3, taskData4],
         projectName: 'ProjectB'
     }
 
     const projectTasks3: ProjectTasksProps = {
-        project: 3,
+        id: 3,
         tasks: [],
         projectName: 'ProjectC'
     }
 
     const projectTasks: ProjectTasksProps[] = [projectTasks1, projectTasks2, projectTasks3];
 
+    const [darkMode, setDarkMode] = useState<boolean>(false);
+    const [projects, setProjects] = useState<ProjectTasksProps[]>(projectTasks);
+
     function toggleDarkMode() {
         setDarkMode(!darkMode);
     }
 
     function addProject(newProject: string) {
-        setProjects([...projects, newProject]);
+        let projectTask: ProjectTasksProps = {
+            id: projects.length + 1,
+            tasks: [],
+            projectName: newProject
+        }
+        setProjects([...projects, projectTask]);
     }
-    return (
+
+        return (
              <div className="App">
                 <SideBar isDarkMode ={darkMode}
                          onChangeDarkMode = {() => toggleDarkMode()}
                          projects = {projects}
                          onAddProject = {(project:string) => addProject(project)}/>
-                <CentralComponent projects = {projectTasks}/>
+                <CentralComponent projects = {projects}/>
             </div>
       );
 }
