@@ -2,6 +2,8 @@ import React, {useState} from 'react';
 import './App.css';
 import SideBar from './components/SideBar';
 import CentralComponent from './components/CentralComponent';
+import Header from './components/Header';
+
 
 import { TaskProps } from './components/Task';
 import { ProjectTasksProps } from './components/ProjectTasks';
@@ -62,6 +64,11 @@ function App() {
 
     const [darkMode, setDarkMode] = useState<boolean>(false);
     const [projects, setProjects] = useState<ProjectTasksProps[]>(projectTasks);
+    const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(true);
+
+    function onToggleSidebar() {
+        setIsSidebarVisible(!isSidebarVisible);
+    }
 
     function toggleDarkMode() {
         setDarkMode(!darkMode);
@@ -78,10 +85,12 @@ function App() {
 
         return (
              <div className="App">
+                <Header onToggleSideBar={onToggleSidebar}/>
                 <SideBar isDarkMode ={darkMode}
                          onChangeDarkMode = {() => toggleDarkMode()}
                          projects = {projects}
-                         onAddProject = {(project:string) => addProject(project)}/>
+                         onAddProject = {(project:string) => addProject(project)}
+                         isSidebarVisible = {isSidebarVisible}/>
                 <CentralComponent projects = {projects}/>
             </div>
       );

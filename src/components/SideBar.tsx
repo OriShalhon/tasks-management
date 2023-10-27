@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import * as FaIcons from 'react-icons/fa';
 import './SideBar.css';
 import { IconContext } from 'react-icons';
 import  { DarkModeSwitch } from 'react-toggle-dark-mode';
@@ -10,16 +9,14 @@ interface Props {
     onChangeDarkMode: () => void,
     projects: ProjectTasksProps[],
     onAddProject: (newProject: string) => void
+    isSidebarVisible: boolean
 }
-const Sidebar: React.FC<Props> = ({ isDarkMode, onChangeDarkMode, projects, onAddProject}) => {
-                                
-    const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(true);
+const Sidebar: React.FC<Props> = ({isDarkMode, onChangeDarkMode,
+                                projects, onAddProject,
+                                isSidebarVisible}) => {
+                                 
     const [newProject, setNewProject] = useState<string>('');
    
-    const toggleSidebar = () => {
-        setIsSidebarVisible(!isSidebarVisible);
-    };
-
     const addProject = () => {
         if (newProject) {
             onAddProject(newProject);
@@ -30,11 +27,6 @@ const Sidebar: React.FC<Props> = ({ isDarkMode, onChangeDarkMode, projects, onAd
     return (
         <>
             <IconContext.Provider value={{ color: '#696969' }}>
-                <div className='sidebar menu-padding'>
-                    <a className='menu-bars' onClick={toggleSidebar}>
-                        <FaIcons.FaBars />
-                    </a>
-                </div>
                     <div className={isSidebarVisible? 'sidebar-content visible menu-padding' : 'sidebar-content'}>
                         <div className="add-project">
                             <input
