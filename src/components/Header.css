@@ -1,0 +1,24 @@
+
+.header {
+    background-color: #d7d7d7;
+    height: 80px;
+    display: flex;
+    justify-content: space-between; /* changed from start to space-between */
+    align-items: center;
+    width: 100%;
+}
+
+.header-buttons {
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+}
+
+.menu-bars{
+    font-size: 2rem;
+    background: none;
+}
+
+.menu-padding{
+    padding-left: 1rem;
+}
