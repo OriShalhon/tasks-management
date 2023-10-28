@@ -10,10 +10,11 @@ interface Props {
     projects: ProjectTasksProps[],
     onAddProject: (newProject: string) => void
     isSidebarVisible: boolean
+    onChangeProjectVisibility: (projectId: number) => void
 }
 const Sidebar: React.FC<Props> = ({isDarkMode, onChangeDarkMode,
                                 projects, onAddProject,
-                                isSidebarVisible}) => {
+                                isSidebarVisible, onChangeProjectVisibility}) => {
                                  
     const [newProject, setNewProject] = useState<string>('');
    
@@ -27,8 +28,8 @@ const Sidebar: React.FC<Props> = ({isDarkMode, onChangeDarkMode,
     return (
         <>
             <IconContext.Provider value={{ color: '#696969' }}>
-                    <div className={isSidebarVisible? 'sidebar-content visible menu-padding' : 'sidebar-content'}>
-                        <div className="add-project">
+                    <div className={isSidebarVisible? 'sidebar-content visible' : 'sidebar-content'}>
+                        <div className="sidebar-item">
                             <input
                                 type="text"
                                 placeholder="Enter project name"
@@ -39,10 +40,10 @@ const Sidebar: React.FC<Props> = ({isDarkMode, onChangeDarkMode,
                         </div>
                         <ul>
                             {projects.map((project) => (
-                                <li key={project.id}>{project.projectName}</li>
+                                <li className ="sidebar-item" key={project.id}>{project.projectName}</li>
                             ))}
                         </ul>
-                        <DarkModeSwitch
+                        <DarkModeSwitch className ="sidebar-item"
                             onChange={onChangeDarkMode}
                             checked={isDarkMode}
                             size={20}

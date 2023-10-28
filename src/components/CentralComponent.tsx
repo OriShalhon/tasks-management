@@ -6,7 +6,9 @@ import {ProjectTasksProps} from './ProjectTasks';
 const CentralComponent: React.FC<{ projects: ProjectTasksProps[]}> = ({ projects }) => {
     return (
         <div className='centralComponent'>
-            {projects.map((project) => (
+            {projects
+            .filter(project => project.isVisibile)
+            .map((project) => (
                 <ProjectTasks key={project.id} projectData={project}  />
             ))}
         </div>

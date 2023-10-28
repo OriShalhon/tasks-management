@@ -6,7 +6,8 @@ import './ProjectTasks.css';
 export type ProjectTasksProps = {
     id: number,
     tasks: TaskProps[],
-    projectName: string
+    projectName: string,
+    isVisibile: boolean
 }
 
 const ProjectTasks: React.FC <{projectData: ProjectTasksProps}>= ({projectData}) => {
