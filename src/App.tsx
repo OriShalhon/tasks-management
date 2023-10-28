@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import SideBar from './components/SideBar';
 import CentralComponent from './components/CentralComponent';
@@ -45,27 +45,44 @@ function App() {
     const projectTasks1: ProjectTasksProps = {
         id: 1,
         tasks: [taskData1, taskData2],
-        projectName: 'ProjectA'
+        projectName: 'ProjectA',
+        isVisibile: false
     }
 
     const projectTasks2: ProjectTasksProps = {
         id: 2,
         tasks: [taskData3, taskData4],
-        projectName: 'ProjectB'
+        projectName: 'ProjectB',
+        isVisibile: true
     }
 
     const projectTasks3: ProjectTasksProps = {
         id: 3,
         tasks: [],
-        projectName: 'ProjectC'
+        projectName: 'ProjectC',
+        isVisibile: true
     }
 
     const projectTasks: ProjectTasksProps[] = [projectTasks1, projectTasks2, projectTasks3];
 
+    const initialVisibility = projectTasks.map((project) => project.isVisibile);
+
+    
     const [darkMode, setDarkMode] = useState<boolean>(false);
     const [projects, setProjects] = useState<ProjectTasksProps[]>(projectTasks);
     const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(true);
-
+    const [projectsVisibility, setProjectsVisibility] = useState<boolean[]>(initialVisibility);
+    
+    function toggleProjectVisibility(projectId: number) {
+        const newProjectsVisibility = projectsVisibility.map((visibility, index) => {
+            if (index === projectId) {
+                return !visibility;
+            }
+            return visibility;
+        });
+        setProjectsVisibility(newProjectsVisibility);
+    }
+    
     function onToggleSidebar() {
         setIsSidebarVisible(!isSidebarVisible);
     }
@@ -78,7 +95,8 @@ function App() {
         let projectTask: ProjectTasksProps = {
             id: projects.length + 1,
             tasks: [],
-            projectName: newProject
+            projectName: newProject,
+            isVisibile: true
         }
         setProjects([...projects, projectTask]);
     }
@@ -90,7 +108,8 @@ function App() {
                          onChangeDarkMode = {() => toggleDarkMode()}
                          projects = {projects}
                          onAddProject = {(project:string) => addProject(project)}
-                         isSidebarVisible = {isSidebarVisible}/>
+                         isSidebarVisible = {isSidebarVisible}
+                         onChangeProjectVisibility={(projectId:number) => toggleProjectVisibility(projectId)}/>
                 <CentralComponent projects = {projects}/>
             </div>
       );
