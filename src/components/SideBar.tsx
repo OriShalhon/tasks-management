@@ -40,10 +40,10 @@ const Sidebar: React.FC<Props> = ({isDarkMode, onChangeDarkMode,
                         </div>
                         <ul>
                             {projects.map((project) => (
-                                <li className ="sidebar-item" key={project.id}>{project.projectName}</li>
+                                <li className ="sidebar-item" key={project.id} onClick ={()=>onChangeProjectVisibility(project.id)}>{project.projectName}</li>
                             ))}
                         </ul>
-                        <DarkModeSwitch className ="sidebar-item"
+                        <DarkModeSwitch
                             onChange={onChangeDarkMode}
                             checked={isDarkMode}
                             size={20}
