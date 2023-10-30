@@ -83,6 +83,17 @@ function App() {
     );
   }
 
+  function addTaskToProject(task: TaskProps, projectId: number) {
+    setProjects(
+      projects.map((project) => {
+        project.id === projectId
+          ? (project.tasks = [...project.tasks, task])
+          : (project.tasks = project.tasks);
+        return project;
+      })
+    );
+  }
+
   function onToggleSidebar() {
     setIsSidebarVisible(!isSidebarVisible);
   }
@@ -114,7 +125,12 @@ function App() {
           toggleProjectVisibility(projectId)
         }
       />
-      <CentralComponent projects={projects} />
+      <CentralComponent
+        projects={projects}
+        onAddTask={(task: TaskProps, projectId: number) =>
+          addTaskToProject(task, projectId)
+        }
+      />
     </div>
   );
 }
