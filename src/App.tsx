@@ -26,7 +26,7 @@ function App() {
   };
 
   const taskData3 = {
-    id: 3,
+    id: 1,
     text: "Task 3",
     leadingTasks: [],
     isCompleted: true,
@@ -34,7 +34,7 @@ function App() {
   };
 
   const taskData4 = {
-    id: 4,
+    id: 2,
     text: "Task 4",
     leadingTasks: [],
     isCompleted: false,
