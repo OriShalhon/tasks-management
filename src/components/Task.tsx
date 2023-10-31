@@ -9,12 +9,20 @@ export type TaskProps = {
   project: number;
 };
 
-const Task: React.FC<{ task: TaskProps }> = ({ task }) => {
+interface Props {
+  task: TaskProps;
+  onChangeTaskStatus: (taskId: number) => void;
+}
+
+const Task: React.FC<Props> = ({ task, onChangeTaskStatus }) => {
   const leadingTask = task.leadingTasks ? task.leadingTasks : null;
   const isCompleted = task.isCompleted ? task.isCompleted : false;
   const project = task.project ? task.project : "";
   return (
-    <div className={`task ${task.isCompleted ? "complete" : ""}`}>
+    <div
+      className={`task ${task.isCompleted ? "complete" : ""}`}
+      onClick={() => onChangeTaskStatus(task.id)}
+    >
       <div className="task-info">
         <div>ID: {task.id}</div>
         <div>Text: {task.text}</div>

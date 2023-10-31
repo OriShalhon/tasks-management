@@ -17,16 +17,29 @@ interface Props {
 
 const ProjectTasks: React.FC<Props> = ({ projectData, onAddTask }) => {
   const [newTask, setNewTask] = useState<string>("");
+  const [tasks, setTasks] = useState<TaskProps[]>(projectData.tasks);
+
+  function changeTaskStatus(taskId: number) {
+    setTasks(
+      tasks.map((task) => {
+        task.id === taskId
+          ? (task.isCompleted = !task.isCompleted)
+          : (task.isCompleted = task.isCompleted);
+        return task;
+      })
+    );
+  }
 
   const addTask = () => {
     if (newTask) {
       const task = {
-        id: projectData.tasks.length + 1,
+        id: projectData.tasks.length + 1, //TODO - change behavior of id
         text: newTask,
         leadingTasks: [],
         isCompleted: false,
         project: projectData.id,
       };
+      setTasks([...tasks, task]);
       onAddTask(task, projectData.id);
       setNewTask("");
     }
@@ -46,7 +59,11 @@ const ProjectTasks: React.FC<Props> = ({ projectData, onAddTask }) => {
       </div>
       <div>
         {projectData.tasks.map((taskData) => (
-          <Task key={taskData.id} task={taskData} />
+          <Task
+            key={taskData.id}
+            task={taskData}
+            onChangeTaskStatus={(taskId: number) => changeTaskStatus(taskId)}
+          />
         ))}
       </div>
     </div>

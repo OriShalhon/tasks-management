@@ -15,7 +15,11 @@ const CentralComponent: React.FC<Props> = ({ projects, onAddTask }) => {
       {projects
         .filter((project) => project.isVisibile)
         .map((project) => (
-          <ProjectTasks projectData={project} onAddTask={onAddTask} />
+          <ProjectTasks
+            key={project.id}
+            projectData={project}
+            onAddTask={onAddTask}
+          />
         ))}
     </div>
   );

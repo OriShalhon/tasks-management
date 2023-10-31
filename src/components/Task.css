@@ -1,12 +1,12 @@
 .task {
-    background-color: rgb(194, 194, 104);
-    border-radius: 8px;
-    padding: 10px;
-    margin: 10px;
-    width: 100px;
-    height: 100px;
-  }
-  
-  .complete {
-    background-color: lightgreen;
-  }
+  background-color: rgb(147, 64, 64);
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px;
+  width: 100px;
+  height: 100px;
+}
+
+.complete {
+  background-color: lightgreen;
+}
