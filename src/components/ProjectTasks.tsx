@@ -17,14 +17,19 @@ interface Props {
   onDeleteTask: (projectId: number, taskId: number) => void;
 }
 
-const ProjectTasks: React.FC<Props> = ({ projectData, onAddTask, onChangeTaskStatus, onDeleteTask}) => {
+const ProjectTasks: React.FC<Props> = ({
+  projectData,
+  onAddTask,
+  onChangeTaskStatus,
+  onDeleteTask,
+}) => {
   const [newTask, setNewTask] = useState<string>("");
 
   const addTask = () => {
     if (newTask) {
       const task = {
         id: projectData.tasks.length + 1, //TODO - change behavior of id
-        text: newTask,
+        headline: newTask,
         leadingTasks: [],
         isCompleted: false,
         project: projectData.id,
@@ -52,8 +57,12 @@ const ProjectTasks: React.FC<Props> = ({ projectData, onAddTask, onChangeTaskSta
           <Task
             key={taskData.id}
             task={taskData}
-            onChangeTaskStatus={(taskId: number) => onChangeTaskStatus(projectData.id, taskId)}
-            onDeleteTask={(taskId: number) => onDeleteTask(projectData.id, taskId)}
+            onChangeTaskStatus={(taskId: number) =>
+              onChangeTaskStatus(projectData.id, taskId)
+            }
+            onDeleteTask={(taskId: number) =>
+              onDeleteTask(projectData.id, taskId)
+            }
           />
         ))}
       </div>

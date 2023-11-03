@@ -6,12 +6,12 @@ import Header from "./components/Header";
 
 import Task, { TaskProps } from "./components/Task";
 import { ProjectTasksProps } from "./components/ProjectTasks";
-  
-const App:React.FC = () => {
+
+const App: React.FC = () => {
   //place holders for later actual data
   const taskData1: TaskProps = {
     id: 1,
-    text: "Task 1",
+    headline: "Task 1",
     leadingTasks: [],
     isCompleted: true,
     project: 1,
@@ -20,7 +20,7 @@ const App:React.FC = () => {
 
   const taskData2: TaskProps = {
     id: 2,
-    text: "Task 2",
+    headline: "Task 2",
     leadingTasks: [],
     isCompleted: true,
     project: 1,
@@ -29,7 +29,7 @@ const App:React.FC = () => {
 
   const taskData3: TaskProps = {
     id: 1,
-    text: "Task 3",
+    headline: "Task 3",
     leadingTasks: [],
     isCompleted: true,
     project: 2,
@@ -38,7 +38,7 @@ const App:React.FC = () => {
 
   const taskData4 = {
     id: 2,
-    text: "Task 4",
+    headline: "Task 4",
     leadingTasks: [],
     isCompleted: false,
     project: 2,
@@ -85,7 +85,7 @@ const App:React.FC = () => {
         return project;
       })
     );
-  }
+  };
 
   const addTaskToProject = (task: TaskProps, projectId: number) => {
     setProjects(
@@ -96,7 +96,7 @@ const App:React.FC = () => {
         return project;
       })
     );
-  }
+  };
 
   const toggleTaskIsComplete = (projectId: number, taskId: number) => {
     setProjects(
@@ -112,7 +112,7 @@ const App:React.FC = () => {
         return project;
       })
     );
-  }
+  };
 
   const deleteTask = (projectId: number, taskId: number) => {
     setProjects(
@@ -123,15 +123,15 @@ const App:React.FC = () => {
         return project;
       })
     );
-  }
+  };
 
   const onToggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
-  }
+  };
 
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
-  }
+  };
 
   const addProject = (newProject: string) => {
     let projectTask: ProjectTasksProps = {
@@ -141,7 +141,7 @@ const App:React.FC = () => {
       isVisibile: true,
     };
     setProjects([...projects, projectTask]);
-  }
+  };
 
   return (
     <div className="App">
@@ -170,6 +170,6 @@ const App:React.FC = () => {
       />
     </div>
   );
-}
+};
 
 export default App;
