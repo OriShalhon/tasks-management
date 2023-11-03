@@ -7,9 +7,11 @@ import { TaskProps } from "./Task";
 interface Props {
   projects: ProjectTasksProps[];
   onAddTask: (newTask: TaskProps, projectId: number) => void;
+  onChangeTaskStatus: (projectId: number, taskId: number) => void;
+  onDeleteTask: (projectId: number, taskId: number) => void;
 }
 
-const CentralComponent: React.FC<Props> = ({ projects, onAddTask }) => {
+const CentralComponent: React.FC<Props> = ({ projects, onAddTask, onChangeTaskStatus, onDeleteTask}) => {
   return (
     <div className="centralComponent">
       {projects
@@ -19,6 +21,8 @@ const CentralComponent: React.FC<Props> = ({ projects, onAddTask }) => {
             key={project.id}
             projectData={project}
             onAddTask={onAddTask}
+            onChangeTaskStatus={onChangeTaskStatus}
+            onDeleteTask={onDeleteTask}
           />
         ))}
     </div>

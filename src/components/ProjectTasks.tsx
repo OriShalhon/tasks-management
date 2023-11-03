@@ -13,22 +13,12 @@ export type ProjectTasksProps = {
 interface Props {
   projectData: ProjectTasksProps;
   onAddTask: (newTask: TaskProps, projectID: number) => void;
+  onChangeTaskStatus: (projectId: number, taskId: number) => void;
+  onDeleteTask: (projectId: number, taskId: number) => void;
 }
 
-const ProjectTasks: React.FC<Props> = ({ projectData, onAddTask }) => {
+const ProjectTasks: React.FC<Props> = ({ projectData, onAddTask, onChangeTaskStatus, onDeleteTask}) => {
   const [newTask, setNewTask] = useState<string>("");
-  const [tasks, setTasks] = useState<TaskProps[]>(projectData.tasks);
-
-  function changeTaskStatus(taskId: number) {
-    setTasks(
-      tasks.map((task) => {
-        task.id === taskId
-          ? (task.isCompleted = !task.isCompleted)
-          : (task.isCompleted = task.isCompleted);
-        return task;
-      })
-    );
-  }
 
   const addTask = () => {
     if (newTask) {
@@ -38,8 +28,8 @@ const ProjectTasks: React.FC<Props> = ({ projectData, onAddTask }) => {
         leadingTasks: [],
         isCompleted: false,
         project: projectData.id,
+        description: "",
       };
-      setTasks([...tasks, task]);
       onAddTask(task, projectData.id);
       setNewTask("");
     }
@@ -62,7 +52,8 @@ const ProjectTasks: React.FC<Props> = ({ projectData, onAddTask }) => {
           <Task
             key={taskData.id}
             task={taskData}
-            onChangeTaskStatus={(taskId: number) => changeTaskStatus(taskId)}
+            onChangeTaskStatus={(taskId: number) => onChangeTaskStatus(projectData.id, taskId)}
+            onDeleteTask={(taskId: number) => onDeleteTask(projectData.id, taskId)}
           />
         ))}
       </div>
