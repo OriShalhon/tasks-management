@@ -7,7 +7,6 @@
   display: flex;
   flex-direction: column;
   position: fixed;
-  top: 80px;
   left: -100%;
   transition: 850ms;
   & ul {
@@ -22,9 +21,14 @@
 }
 
 .sidebar-item {
-  padding: 10px;
   border-bottom: 1px solid #ccc; /* Divider between items */
   &.selected {
     background-color: #555;
   }
+  padding-bottom: 10px;
+}
+
+.button {
+  align-items: center;
+  justify-content: center;
 }

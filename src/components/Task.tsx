@@ -15,9 +15,6 @@ interface Props {
 }
 
 const Task: React.FC<Props> = ({ task, onChangeTaskStatus }) => {
-  const leadingTask = task.leadingTasks ? task.leadingTasks : null;
-  const isCompleted = task.isCompleted ? task.isCompleted : false;
-  const project = task.project ? task.project : "";
   return (
     <div
       className={`task ${task.isCompleted ? "complete" : ""}`}

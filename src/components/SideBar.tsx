@@ -3,6 +3,7 @@ import "./SideBar.css";
 import { IconContext } from "react-icons";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { ProjectTasksProps } from "./ProjectTasks";
+import * as FaIcons from "react-icons/fa";
 
 interface Props {
   isDarkMode: boolean;
@@ -44,7 +45,9 @@ const Sidebar: React.FC<Props> = ({
               value={newProject}
               onChange={(e) => setNewProject(e.target.value)}
             />
-            <button onClick={addProject}>Add Project</button>
+            <button className="button" onClick={addProject}>
+              <FaIcons.FaPlus />
+            </button>
           </div>
           <ul>
             {projects.map((project) => (
