@@ -51,7 +51,7 @@ const ProjectTasks: React.FC<Props> = ({ projectData, onAddTask }) => {
       <div>
         <input
           type="text"
-          placeholder="Enter project name"
+          placeholder="Enter new task"
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
         />

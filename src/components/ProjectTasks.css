@@ -1,3 +1,7 @@
 .projectTasks {
-    margin-left: 300px;
+  margin-left: 300px;
+}
+
+.projectTasks > div {
+  display: flex;
 }
