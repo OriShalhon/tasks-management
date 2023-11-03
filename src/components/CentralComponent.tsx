@@ -11,7 +11,13 @@ interface Props {
   onDeleteTask: (projectId: number, taskId: number) => void;
 }
 
-const CentralComponent: React.FC<Props> = ({ projects, onAddTask, onChangeTaskStatus, onDeleteTask}) => {
+const CentralComponent: React.FC<Props> = ({
+  projects,
+  onAddTask,
+  onChangeTaskStatus,
+  onDeleteTask,
+}) => {
+  console.log(projects);
   return (
     <div className="centralComponent">
       {projects
