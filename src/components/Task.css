@@ -5,8 +5,32 @@
   margin: 10px;
   width: 100px;
   height: 100px;
+  transition: all 0.3s ease-in-out; /* added transition animation */
+  position: relative; /* added relative positioning */
+  
+  &.isSelected {
+    width: 200px; /* added 100% width */
+    height: 200px; /* added 100% height */
+  }
+  
+  &.complete {
+    background-color: lightgreen;
+  }
 }
 
-.complete {
-  background-color: lightgreen;
+.invisible-button {
+  background-color: transparent;
+  border: none;
+  position: absolute; /* added absolute positioning */
+  bottom: 0; /* positioned at the bottom */
+  right: 0; /* positioned at the right */
 }
+
+.delete-button{
+  background-color: transparent;
+  border: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+

@@ -4,33 +4,36 @@ import SideBar from "./components/SideBar";
 import CentralComponent from "./components/CentralComponent";
 import Header from "./components/Header";
 
-import { TaskProps } from "./components/Task";
+import Task, { TaskProps } from "./components/Task";
 import { ProjectTasksProps } from "./components/ProjectTasks";
-
-function App() {
+  
+const App:React.FC = () => {
   //place holders for later actual data
-  const taskData1 = {
+  const taskData1: TaskProps = {
     id: 1,
     text: "Task 1",
     leadingTasks: [],
     isCompleted: true,
     project: 1,
+    description: "This is a description",
   };
 
-  const taskData2 = {
+  const taskData2: TaskProps = {
     id: 2,
     text: "Task 2",
     leadingTasks: [],
     isCompleted: true,
     project: 1,
+    description: "This is a description",
   };
 
-  const taskData3 = {
+  const taskData3: TaskProps = {
     id: 1,
     text: "Task 3",
     leadingTasks: [],
     isCompleted: true,
     project: 2,
+    description: "This is a description",
   };
 
   const taskData4 = {
@@ -39,6 +42,7 @@ function App() {
     leadingTasks: [],
     isCompleted: false,
     project: 2,
+    description: "This is a description",
   };
 
   const projectTasks1: ProjectTasksProps = {
@@ -72,7 +76,7 @@ function App() {
   const [projects, setProjects] = useState<ProjectTasksProps[]>(projectTasks);
   const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(true);
 
-  function toggleProjectVisibility(projectId: number) {
+  const toggleProjectVisibility = (projectId: number) => {
     setProjects(
       projects.map((project) => {
         project.id === projectId
@@ -83,7 +87,7 @@ function App() {
     );
   }
 
-  function addTaskToProject(task: TaskProps, projectId: number) {
+  const addTaskToProject = (task: TaskProps, projectId: number) => {
     setProjects(
       projects.map((project) => {
         project.id === projectId
@@ -94,15 +98,42 @@ function App() {
     );
   }
 
-  function onToggleSidebar() {
+  const toggleTaskIsComplete = (projectId: number, taskId: number) => {
+    setProjects(
+      projects.map((project) => {
+        project.id === projectId
+          ? (project.tasks = project.tasks.map((task) => {
+              task.id === taskId
+                ? (task.isCompleted = !task.isCompleted)
+                : (task.isCompleted = task.isCompleted);
+              return task;
+            }))
+          : (project.tasks = project.tasks);
+        return project;
+      })
+    );
+  }
+
+  const deleteTask = (projectId: number, taskId: number) => {
+    setProjects(
+      projects.map((project) => {
+        project.id === projectId
+          ? (project.tasks = project.tasks.filter((task) => task.id !== taskId))
+          : (project.tasks = project.tasks);
+        return project;
+      })
+    );
+  }
+
+  const onToggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
   }
 
-  function toggleDarkMode() {
+  const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   }
 
-  function addProject(newProject: string) {
+  const addProject = (newProject: string) => {
     let projectTask: ProjectTasksProps = {
       id: projects.length + 1,
       tasks: [],
@@ -129,6 +160,12 @@ function App() {
         projects={projects}
         onAddTask={(task: TaskProps, projectId: number) =>
           addTaskToProject(task, projectId)
+        }
+        onChangeTaskStatus={(projectId: number, taskId: number) =>
+          toggleTaskIsComplete(projectId, taskId)
+        }
+        onDeleteTask={(projectId: number, taskId: number) =>
+          deleteTask(projectId, taskId)
         }
       />
     </div>
