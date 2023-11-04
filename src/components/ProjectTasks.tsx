@@ -6,6 +6,7 @@ import {
   addTaskToProject,
   toggleTaskComplete,
   deleteTask,
+  editTaskDescription
 } from "../store/slices/projectTasksSlice";
 
 import { ProjectTasksProps } from "../store/slices/projectTasksSlice";
@@ -56,6 +57,15 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
             }
             onDeleteTask={(taskId: number) =>
               dispatch(deleteTask({ projectId: projectData.id, taskId }))
+            }
+            onEditTaskDescription={(taskId: number, description: string) =>
+              dispatch(
+                editTaskDescription({
+                  projectId: projectData.id,
+                  taskId,
+                  description,
+                })
+              )
             }
           />
         ))}
