@@ -2,6 +2,12 @@ import React, { useState } from "react";
 import { TaskProps } from "./Task";
 import Task from "./Task";
 import "./ProjectTasks.css";
+import { useAppDispatch } from "../store/store";
+import {
+  addTaskToProject,
+  toggleTaskComplete,
+  deleteTask,
+} from "../store/slices/projectTasksSlice";
 
 export type ProjectTasksProps = {
   id: number;
@@ -12,17 +18,10 @@ export type ProjectTasksProps = {
 
 interface Props {
   projectData: ProjectTasksProps;
-  onAddTask: (newTask: TaskProps, projectID: number) => void;
-  onChangeTaskStatus: (projectId: number, taskId: number) => void;
-  onDeleteTask: (projectId: number, taskId: number) => void;
 }
 
-const ProjectTasks: React.FC<Props> = ({
-  projectData,
-  onAddTask,
-  onChangeTaskStatus,
-  onDeleteTask,
-}) => {
+const ProjectTasks: React.FC<Props> = ({ projectData }) => {
+  const dispatch = useAppDispatch();
   const [newTask, setNewTask] = useState<string>("");
 
   const addTask = () => {
@@ -35,7 +34,7 @@ const ProjectTasks: React.FC<Props> = ({
         project: projectData.id,
         description: "",
       };
-      onAddTask(task, projectData.id);
+      dispatch(addTaskToProject({ projectId: projectData.id, task }));
       setNewTask("");
     }
   };
@@ -58,10 +57,12 @@ const ProjectTasks: React.FC<Props> = ({
             key={taskData.id}
             task={taskData}
             onChangeTaskStatus={(taskId: number) =>
-              onChangeTaskStatus(projectData.id, taskId)
+              dispatch(
+                toggleTaskComplete({ projectId: projectData.id, taskId })
+              )
             }
             onDeleteTask={(taskId: number) =>
-              onDeleteTask(projectData.id, taskId)
+              dispatch(deleteTask({ projectId: projectData.id, taskId }))
             }
           />
         ))}
