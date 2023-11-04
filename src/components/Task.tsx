@@ -1,14 +1,6 @@
 import React, { useState } from "react";
 import "./Task.css";
-
-export type TaskProps = {
-  id: number;
-  headline: string;
-  leadingTasks: number[];
-  isCompleted: boolean;
-  project: number;
-  description: string;
-};
+import { TaskProps } from "../store/slices/projectTasksSlice";
 
 interface Props {
   task: TaskProps;

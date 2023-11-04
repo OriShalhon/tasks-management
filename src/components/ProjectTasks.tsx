@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { TaskProps } from "./Task";
 import Task from "./Task";
 import "./ProjectTasks.css";
 import { useAppDispatch } from "../store/store";
@@ -9,13 +8,7 @@ import {
   deleteTask,
 } from "../store/slices/projectTasksSlice";
 
-export type ProjectTasksProps = {
-  id: number;
-  tasks: TaskProps[];
-  projectName: string;
-  isVisibile: boolean;
-};
-
+import { ProjectTasksProps } from "../store/slices/projectTasksSlice";
 interface Props {
   projectData: ProjectTasksProps;
 }
