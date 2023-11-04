@@ -9,14 +9,14 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ onToggleSideBar }) => {
   return (
     <header>
-      <div className="header menu-padding">
+      <div className="header">
         <a className="menu-bars" onClick={onToggleSideBar}>
           <FaIcons.FaBars />
         </a>
-        <div className="header-buttons">
-          <button className="login-button">Login</button>
-          <button className="logout-button">Logout</button>
-          <div className="user-info">User Info</div>
+        <div className="header-right">
+          <a className="login-button">Login</a>
+          <a className="logout-button">Logout</a>
+          <a className="user-info">User Info</a>
         </div>
       </div>
     </header>

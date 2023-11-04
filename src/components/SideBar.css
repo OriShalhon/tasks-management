@@ -1,5 +1,5 @@
 .sidebar-content {
-  background-color: #d7d7d7;
+  background-color: #f1f1f1;
   width: 250px;
   height: 100%;
   overflow-y: auto;
@@ -14,6 +14,9 @@
     padding: 0;
     margin: 0;
   }
+  & li:hover {
+    background-color: #ddd;
+  }
   &.visible {
     left: 0;
     transition: 350ms;
@@ -23,12 +26,12 @@
 .sidebar-item {
   border-bottom: 1px solid #ccc; /* Divider between items */
   &.selected {
-    background-color: #555;
+    background-color: teal;
+    color: #fff;
   }
-  padding-bottom: 10px;
+  padding: 10px 20px;
 }
 
-.button {
-  align-items: center;
-  justify-content: center;
+.dark-mode-switch {
+  padding: 10px 20px;
 }
