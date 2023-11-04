@@ -6,15 +6,24 @@ interface Props {
   task: TaskProps;
   onChangeTaskStatus: (taskId: number) => void;
   onDeleteTask: (taskId: number) => void;
+  onEditTaskDescription: (taskId: number, description: string) => void;
 }
 
-const Task: React.FC<Props> = ({ task, onChangeTaskStatus, onDeleteTask }) => {
+const Task: React.FC<Props> = ({
+  task,
+  onChangeTaskStatus,
+  onDeleteTask,
+  onEditTaskDescription,
+}) => {
   const [description, setDescription] = useState<string>(task.description);
   const [isDescriptionVisible, setIsDescriptionVisible] =
     useState<boolean>(false);
+  const [isEditing, setIsEditing] = useState<boolean>(false);
 
   const toggleDescription = () => {
-    setIsDescriptionVisible(!isDescriptionVisible);
+    if (!isEditing) {
+      setIsDescriptionVisible(!isDescriptionVisible);
+    }
   };
 
   const toggleTaskStatus = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -27,6 +36,17 @@ const Task: React.FC<Props> = ({ task, onChangeTaskStatus, onDeleteTask }) => {
     onDeleteTask(task.id);
   };
 
+  const handleDescriptionChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setDescription(event.target.value);
+  };
+
+  const handleDescriptionSave = () => {
+    onEditTaskDescription(task.id, description);
+    setIsEditing(false);
+  };
+
   return (
     <div
       className={`task ${task.isCompleted ? "complete" : ""} ${
@@ -35,7 +55,24 @@ const Task: React.FC<Props> = ({ task, onChangeTaskStatus, onDeleteTask }) => {
       onClick={toggleDescription}
     >
       <div className="task-info">{task.headline}</div>
-      <div>{isDescriptionVisible && <div>{task.description}</div>}</div>
+      <div>
+        {isDescriptionVisible && (
+          <div onClick={(e) => e.stopPropagation()}>
+            {isEditing ? (
+              <div>
+                <input
+                  type="text"
+                  value={description}
+                  onChange={handleDescriptionChange}
+                />
+                <button onClick={handleDescriptionSave}>Save</button>
+              </div>
+            ) : (
+              <div onClick={() => setIsEditing(true)}>{task.description}</div>
+            )}
+          </div>
+        )}
+      </div>
       <button className="invisible-button" onClick={toggleTaskStatus}>
         V
       </button>

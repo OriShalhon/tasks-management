@@ -7,14 +7,14 @@ export type TaskProps = {
   isCompleted: boolean;
   project: number;
   description: string;
-}
+};
 
 export type ProjectTasksProps = {
   id: number;
   tasks: TaskProps[];
   projectName: string;
   isVisibile: boolean;
-}
+};
 
 //place holders for later actual data
 const taskData1: TaskProps = {
@@ -130,7 +130,10 @@ const projectTasksSlice = createSlice({
         return project;
       });
     },
-    toggleTaskComplete(state, action) {
+    toggleTaskComplete(
+      state,
+      action: PayloadAction<{ projectId: number; taskId: number }>
+    ) {
       state.projects = state.projects.map((project) => {
         if (project.id === action.payload.projectId) {
           project.tasks = project.tasks.map((task) => {
@@ -143,11 +146,31 @@ const projectTasksSlice = createSlice({
         return project;
       });
     },
-    toggleProjectVisibility(state, action) {
+    toggleProjectVisibility(state, action: PayloadAction<number>) {
       state.projects = state.projects.map((project) => {
         project.id === action.payload
           ? (project.isVisibile = !project.isVisibile)
           : (project.isVisibile = project.isVisibile);
+        return project;
+      });
+    },
+    editTaskDescription(
+      state,
+      action: PayloadAction<{
+        projectId: number;
+        taskId: number;
+        description: string;
+      }>
+    ) {
+      state.projects = state.projects.map((project) => {
+        if (project.id === action.payload.projectId) {
+          project.tasks = project.tasks.map((task) => {
+            if (task.id === action.payload.taskId) {
+              task.description = action.payload.description;
+            }
+            return task;
+          });
+        }
         return project;
       });
     },
@@ -161,6 +184,7 @@ export const {
   deleteTask,
   toggleTaskComplete,
   toggleProjectVisibility,
+  editTaskDescription,
 } = projectTasksSlice.actions;
 
 export default projectTasksSlice.reducer;
