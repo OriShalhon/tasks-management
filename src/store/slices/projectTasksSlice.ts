@@ -1,6 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ProjectTasksProps } from "../../components/ProjectTasks";
-import { TaskProps } from "../../components/Task";
+
+export type TaskProps = {
+  id: number;
+  headline: string;
+  leadingTasks: number[];
+  isCompleted: boolean;
+  project: number;
+  description: string;
+}
+
+export type ProjectTasksProps = {
+  id: number;
+  tasks: TaskProps[];
+  projectName: string;
+  isVisibile: boolean;
+}
 
 //place holders for later actual data
 const taskData1: TaskProps = {

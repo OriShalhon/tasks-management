@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./SideBar.css";
 import { IconContext } from "react-icons";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
-import { ProjectTasksProps } from "./ProjectTasks";
+import { ProjectTasksProps } from "../store/slices/projectTasksSlice";
 import * as FaIcons from "react-icons/fa";
 import { useAppDispatch } from "../store/store";
 import {
@@ -10,11 +10,13 @@ import {
   addProject,
 } from "../store/slices/projectTasksSlice";
 import { toggleDarkMode } from "../store/slices/appSlice";
+
 interface Props {
   isDarkMode: boolean;
   projects: ProjectTasksProps[];
   isSidebarVisible: boolean;
 }
+
 const Sidebar: React.FC<Props> = ({
   isDarkMode,
   projects,
