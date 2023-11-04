@@ -55,24 +55,24 @@ const Task: React.FC<Props> = ({
       onClick={toggleDescription}
     >
       <div className="task-info">{task.headline}</div>
-      <div>
-        {isDescriptionVisible && (
-          <div onClick={(e) => e.stopPropagation()}>
-            {isEditing ? (
-              <div>
-                <input
-                  type="text"
-                  value={description}
-                  onChange={handleDescriptionChange}
-                />
-                <button onClick={handleDescriptionSave}>Save</button>
-              </div>
-            ) : (
-              <div onClick={() => setIsEditing(true)}>{task.description}</div>
-            )}
-          </div>
-        )}
-      </div>
+      {isDescriptionVisible && (
+        <div onClick={(e) => e.stopPropagation()}>
+          {isEditing ? (
+            <div>
+              <input
+                type="text"
+                value={description ? description : "enter description"}
+                onChange={handleDescriptionChange}
+              />
+              <button onClick={handleDescriptionSave}>Save</button>
+            </div>
+          ) : (
+            <div onClick={() => setIsEditing(true)}>
+              {task.description ? task.description : "enter description"}
+            </div>
+          )}
+        </div>
+      )}
       <button className="invisible-button" onClick={toggleTaskStatus}>
         V
       </button>
