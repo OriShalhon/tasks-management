@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./CentralComponent.css";
 import ProjectTasks from "./ProjectTasks";
-import { ProjectTasksProps } from "./ProjectTasks";
+import { ProjectTasksProps } from "../store/slices/projectTasksSlice";
 
 interface Props {
   projects: ProjectTasksProps[];
