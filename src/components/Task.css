@@ -1,5 +1,5 @@
 .task {
-  background-color: rgb(147, 64, 64);
+  background-color: rgb(252, 210, 210);
   border-radius: 8px;
   padding: 10px;
   margin: 10px;
@@ -15,6 +15,9 @@
 
   &.complete {
     background-color: lightgreen;
+  }
+  &.inProgress {
+    background-color: lightblue;
   }
 }
 
@@ -32,4 +35,17 @@
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.description-input{
+  height: 100%;
+  border: none;
+  background-color: transparent;
+  resize: none;
+  color: #000;
+  padding: 0.5rem;
+  outline: none;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px #000;
+  transition: all 0.3s ease-in-out;
 }
