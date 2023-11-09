@@ -1,12 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+export enum TaskStatus {
+  new = 0,
+  inProgress,
+  done,
+}
+
 export type TaskProps = {
   id: number;
   headline: string;
   leadingTasks: number[];
-  isCompleted: boolean;
+  status: TaskStatus;
   project: number;
   description: string;
+  startTime?: Date;
 };
 
 export type ProjectTasksProps = {
@@ -21,7 +28,7 @@ const taskData1: TaskProps = {
   id: 1,
   headline: "Task 1",
   leadingTasks: [],
-  isCompleted: true,
+  status: TaskStatus.new,
   project: 1,
   description: "This is a description",
 };
@@ -30,7 +37,7 @@ const taskData2: TaskProps = {
   id: 2,
   headline: "Task 2",
   leadingTasks: [],
-  isCompleted: true,
+  status: TaskStatus.new,
   project: 1,
   description: "This is a description",
 };
@@ -39,7 +46,7 @@ const taskData3: TaskProps = {
   id: 1,
   headline: "Task 3",
   leadingTasks: [],
-  isCompleted: true,
+  status: TaskStatus.new,
   project: 2,
   description: "This is a description",
 };
@@ -48,7 +55,7 @@ const taskData4 = {
   id: 2,
   headline: "Task 4",
   leadingTasks: [],
-  isCompleted: false,
+  status: TaskStatus.new,
   project: 2,
   description: "This is a description",
 };
@@ -138,7 +145,10 @@ const projectTasksSlice = createSlice({
         if (project.id === action.payload.projectId) {
           project.tasks = project.tasks.map((task) => {
             if (task.id === action.payload.taskId) {
-              task.isCompleted = !task.isCompleted;
+              task.status = (task.status + 1) % 3; // cycle between statuses
+              task.status === TaskStatus.inProgress
+                ? (task.startTime = new Date())
+                : (task.startTime = task.startTime);
             }
             return task;
           });

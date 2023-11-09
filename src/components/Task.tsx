@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Task.css";
-import { TaskProps } from "../store/slices/projectTasksSlice";
+import { TaskProps, TaskStatus } from "../store/slices/projectTasksSlice";
 
 interface Props {
   task: TaskProps;
@@ -49,9 +49,13 @@ const Task: React.FC<Props> = ({
 
   return (
     <div
-      className={`task ${task.isCompleted ? "complete" : ""} ${
-        isDescriptionVisible ? "isSelected" : ""
-      }`}
+      className={`task ${
+        task.status === TaskStatus.inProgress
+          ? "inProgress"
+          : task.status === TaskStatus.done
+          ? "complete"
+          : ""
+      } ${isDescriptionVisible ? "isSelected" : ""}`}
       onClick={toggleDescription}
     >
       <div className="task-info">{task.headline}</div>
@@ -60,6 +64,7 @@ const Task: React.FC<Props> = ({
           {isEditing ? (
             <div>
               <input
+                className="description-input"
                 type="text"
                 value={description ? description : "enter description"}
                 onChange={handleDescriptionChange}
@@ -73,13 +78,20 @@ const Task: React.FC<Props> = ({
           )}
         </div>
       )}
+
       <button className="invisible-button" onClick={toggleTaskStatus}>
-        V
+        {task.status === TaskStatus.new
+          ? "Start"
+          : task.status === TaskStatus.inProgress
+          ? "Done"
+          : "Restart"}
       </button>
-      {task.isCompleted && (
-        <button className="delete-button" onClick={deleteTask}>
-          X
-        </button>
+      {task.status === TaskStatus.done && (
+        <div>
+          <button className="delete-button" onClick={deleteTask}>
+            X
+          </button>
+        </div>
       )}
     </div>
   );

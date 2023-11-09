@@ -8,7 +8,6 @@ interface Props {
 }
 
 const CentralComponent: React.FC<Props> = ({ projects }) => {
-  console.log(projects);
   return (
     <div className="centralComponent">
       {projects

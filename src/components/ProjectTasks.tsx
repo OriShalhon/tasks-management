@@ -6,10 +6,10 @@ import {
   addTaskToProject,
   toggleTaskComplete,
   deleteTask,
-  editTaskDescription
+  editTaskDescription,
 } from "../store/slices/projectTasksSlice";
 
-import { ProjectTasksProps } from "../store/slices/projectTasksSlice";
+import { ProjectTasksProps, TaskStatus } from "../store/slices/projectTasksSlice";
 interface Props {
   projectData: ProjectTasksProps;
 }
@@ -24,7 +24,7 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
         id: projectData.tasks.length + 1, //TODO - change behavior of id
         headline: newTask,
         leadingTasks: [],
-        isCompleted: false,
+        status: TaskStatus.new,
         project: projectData.id,
         description: "",
       };

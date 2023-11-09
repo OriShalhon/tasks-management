@@ -9,6 +9,10 @@ const store = configureStore({
     app: appSliceReducer,
     projectTasks: projectTasksSliceReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export default store;
