@@ -68,8 +68,12 @@ const Task: React.FC<Props> = ({
                 type="text"
                 value={description ? description : "enter description"}
                 onChange={handleDescriptionChange}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleDescriptionSave();
+                  }
+                }}
               />
-              <button onClick={handleDescriptionSave}>Save</button>
             </div>
           ) : (
             <div onClick={() => setIsEditing(true)}>

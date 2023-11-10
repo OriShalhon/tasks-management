@@ -5,11 +5,16 @@ import { ProjectTasksProps } from "../store/slices/projectTasksSlice";
 
 interface Props {
   projects: ProjectTasksProps[];
+  isSideBarVisible: boolean;
 }
 
-const CentralComponent: React.FC<Props> = ({ projects }) => {
+const CentralComponent: React.FC<Props> = ({ projects, isSideBarVisible }) => {
   return (
-    <div className="centralComponent">
+    <div
+      className={
+        isSideBarVisible ? "centralComponent" : "centralComponent large"
+      }
+    >
       {projects
         .filter((project) => project.isVisibile)
         .map((project) => (

@@ -4,6 +4,7 @@ import SideBar from "./components/SideBar";
 import CentralComponent from "./components/CentralComponent";
 import Header from "./components/Header";
 import { useAppSelector } from "./store/store";
+import "./components/CentralComponent.css";
 
 const App: React.FC = () => {
   const projects = useAppSelector((state) => state.projectTasks.projects);
@@ -18,14 +19,17 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Header onToggleSideBar={onToggleSidebar} />
-      <SideBar
-        isDarkMode={darkMode}
-        projects={projects}
-        isSidebarVisible={isSidebarVisible}
-      />
-      <CentralComponent
-        projects={projects}
-      />
+      <div className="App Content">
+        <SideBar
+          isDarkMode={darkMode}
+          projects={projects}
+          isSidebarVisible={isSidebarVisible}
+        />
+        <CentralComponent
+          projects={projects}
+          isSideBarVisible={isSidebarVisible}
+        />
+      </div>
     </div>
   );
 };
