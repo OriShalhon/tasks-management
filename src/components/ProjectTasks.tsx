@@ -9,7 +9,10 @@ import {
   editTaskDescription,
 } from "../store/slices/projectTasksSlice";
 
-import { ProjectTasksProps, TaskStatus } from "../store/slices/projectTasksSlice";
+import {
+  ProjectTasksProps,
+  TaskStatus,
+} from "../store/slices/projectTasksSlice";
 interface Props {
   projectData: ProjectTasksProps;
 }
@@ -38,12 +41,17 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
       <h1>{projectData.projectName}</h1>
       <div>
         <input
+          className="newTaskInput"
           type="text"
           placeholder="Enter new task"
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              addTask();
+            }
+          }}
         />
-        <button onClick={addTask}>Add task</button>
       </div>
       <div>
         {projectData.tasks.map((taskData) => (

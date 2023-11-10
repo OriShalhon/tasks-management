@@ -1,3 +1,5 @@
 .App {
-    flex-wrap: wrap;
+  & .Content {
+    display: flex;
+  }
 }
