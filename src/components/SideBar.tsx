@@ -41,14 +41,17 @@ const Sidebar: React.FC<Props> = ({
       >
         <div className="sidebar-item">
           <input
+            className="input"
             type="text"
             placeholder="Enter project name"
             value={newProject}
             onChange={(e) => setNewProject(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                onAddProject();
+              }
+            }}
           />
-          <button className="button" onClick={onAddProject}>
-            <FaIcons.FaPlus />
-          </button>
         </div>
         <ul>
           {projects.map((project) => (

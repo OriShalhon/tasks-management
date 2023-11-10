@@ -41,7 +41,7 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
       <h1>{projectData.projectName}</h1>
       <div>
         <input
-          className="newTaskInput"
+          className="input"
           type="text"
           placeholder="Enter new task"
           value={newTask}
