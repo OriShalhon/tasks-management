@@ -184,6 +184,20 @@ const projectTasksSlice = createSlice({
         return project;
       });
     },
+    changeProjectName(
+      state,
+      action: PayloadAction<{
+        projectId: number;
+        newProjectName: string;
+      }>
+    ) {
+      state.projects = state.projects.map((project) => {
+        if (project.id === action.payload.projectId) {
+          project.projectName = action.payload.newProjectName;
+        }
+        return project;
+      });
+    },
   },
 });
 
@@ -195,6 +209,7 @@ export const {
   toggleTaskComplete,
   toggleProjectVisibility,
   editTaskDescription,
+  changeProjectName,
 } = projectTasksSlice.actions;
 
 export default projectTasksSlice.reducer;

@@ -7,12 +7,14 @@ import {
   toggleTaskComplete,
   deleteTask,
   editTaskDescription,
+  changeProjectName,
 } from "../store/slices/projectTasksSlice";
 
 import {
   ProjectTasksProps,
   TaskStatus,
 } from "../store/slices/projectTasksSlice";
+
 interface Props {
   projectData: ProjectTasksProps;
 }
@@ -20,6 +22,35 @@ interface Props {
 const ProjectTasks: React.FC<Props> = ({ projectData }) => {
   const dispatch = useAppDispatch();
   const [newTask, setNewTask] = useState<string>("");
+  const [isEditingProjectName, setIsEditingProjectName] =
+    useState<boolean>(false);
+  const [projectName, setProjectName] = useState<string>(
+    projectData.projectName
+  );
+
+  const handleProjectNameClick = () => {
+    setIsEditingProjectName(true);
+  };
+
+  const handleProjectNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setProjectName(e.target.value);
+  };
+
+  const handleProjectNameKeyDown = (
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === "Enter") {
+      projectName.trim() !== ""
+        ? dispatch(
+            changeProjectName({
+              projectId: projectData.id,
+              newProjectName: projectName,
+            })
+          )
+        : setProjectName(projectData.projectName);
+      setIsEditingProjectName(false);
+    }
+  };
 
   const addTask = () => {
     if (newTask) {
@@ -38,7 +69,21 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
 
   return (
     <div className="projectTasks">
-      <h1>{projectData.projectName}</h1>
+      <h1 onClick={handleProjectNameClick}>
+        {isEditingProjectName ? (
+          <input
+            className="input"
+            type="text"
+            value={projectName}
+            onChange={handleProjectNameChange}
+            onKeyDown={handleProjectNameKeyDown}
+            onBlur={() => setIsEditingProjectName(false)}
+            autoFocus
+          />
+        ) : (
+          projectName
+        )}
+      </h1>
       <div>
         <input
           className="input"
