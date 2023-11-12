@@ -32,14 +32,16 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
     setIsEditingProjectName(true);
   };
 
-  const handleProjectNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setProjectName(e.target.value);
+  const handleProjectNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setProjectName(event.target.value);
   };
 
   const handleProjectNameKeyDown = (
-    e: React.KeyboardEvent<HTMLInputElement>
+    event: React.KeyboardEvent<HTMLInputElement>
   ) => {
-    if (e.key === "Enter") {
+    if (event.key === "Enter") {
       projectName.trim() !== ""
         ? dispatch(
             changeProjectName({
