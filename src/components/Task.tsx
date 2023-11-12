@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Task.css";
 import { TaskProps, TaskStatus } from "../store/slices/projectTasksSlice";
+import { on } from "events";
 
 interface Props {
   task: TaskProps;
@@ -15,11 +16,10 @@ const Task: React.FC<Props> = ({
   onDeleteTask,
   onEditTaskDescription,
 }) => {
-  const [description, setDescription] = useState<string>(task.description);
   const [isDescriptionVisible, setIsDescriptionVisible] =
     useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
-
+  const [description, setDescription] = useState<string>(task.description);
   const toggleDescription = () => {
     if (!isEditing) {
       setIsDescriptionVisible(!isDescriptionVisible);
@@ -36,15 +36,21 @@ const Task: React.FC<Props> = ({
     onDeleteTask(task.id);
   };
 
+  const handleDescriptionKeyDown = (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (event.key === "Enter") {
+      const newDescription =
+        description.trim() !== "" ? description : "enter description";
+      onEditTaskDescription(task.id, newDescription);
+      setIsEditing(false);
+    }
+  };
+
   const handleDescriptionChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setDescription(event.target.value);
-  };
-
-  const handleDescriptionSave = () => {
-    onEditTaskDescription(task.id, description);
-    setIsEditing(false);
   };
 
   return (
@@ -66,13 +72,9 @@ const Task: React.FC<Props> = ({
               <input
                 className="description-input"
                 type="text"
-                value={description ? description : "enter description"}
+                value={description}
                 onChange={handleDescriptionChange}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleDescriptionSave();
-                  }
-                }}
+                onKeyDown={handleDescriptionKeyDown}
               />
             </div>
           ) : (
