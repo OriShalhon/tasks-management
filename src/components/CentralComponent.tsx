@@ -16,7 +16,7 @@ const CentralComponent: React.FC<Props> = ({ projects, isSideBarVisible }) => {
       }
     >
       {projects
-        .filter((project) => project.isVisibile)
+        .filter((project) => project.isVisible)
         .map((project) => (
           <ProjectTasks key={project.id} projectData={project} />
         ))}

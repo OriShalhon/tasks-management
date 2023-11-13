@@ -3,13 +3,17 @@ import "./App.css";
 import SideBar from "./components/SideBar";
 import CentralComponent from "./components/CentralComponent";
 import Header from "./components/Header";
-import { useAppSelector } from "./store/store";
+import { useAppSelector, useAppDispatch } from "./store/store";
 import "./components/CentralComponent.css";
+import { loadProjectTasks } from "./store/slices/projectTasks.thunks";
 
 const App: React.FC = () => {
   const projects = useAppSelector((state) => state.projectTasks.projects);
   const darkMode = useAppSelector((state) => state.app.isDarkMode);
-
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(loadProjectTasks());
+  }, [dispatch]);
   const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(true);
 
   const onToggleSidebar = () => {

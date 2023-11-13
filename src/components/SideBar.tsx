@@ -57,7 +57,7 @@ const Sidebar: React.FC<Props> = ({
           {projects.map((project) => (
             <li
               className={
-                project.isVisibile ? "sidebar-item selected" : "sidebar-item"
+                project.isVisible ? "sidebar-item selected" : "sidebar-item"
               }
               key={project.id}
               onClick={() => dispatch(toggleProjectVisibility(project.id))}

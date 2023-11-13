@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { loadProjectTasksReducers } from "./projectTasks.thunks";
 
 export enum TaskStatus {
   new = 0,
@@ -18,81 +19,17 @@ export type TaskProps = {
 
 export type ProjectTasksProps = {
   id: number;
-  tasks: TaskProps[];
   projectName: string;
-  isVisibile: boolean;
+  isVisible: boolean;
+  tasks: TaskProps[];
 };
 
-//place holders for later actual data
-const taskData1: TaskProps = {
-  id: 1,
-  headline: "Task 1",
-  leadingTasks: [],
-  status: TaskStatus.new,
-  project: 1,
-  description: "This is a description",
-};
-
-const taskData2: TaskProps = {
-  id: 2,
-  headline: "Task 2",
-  leadingTasks: [],
-  status: TaskStatus.new,
-  project: 1,
-  description: "This is a description",
-};
-
-const taskData3: TaskProps = {
-  id: 1,
-  headline: "Task 3",
-  leadingTasks: [],
-  status: TaskStatus.new,
-  project: 2,
-  description: "This is a description",
-};
-
-const taskData4 = {
-  id: 2,
-  headline: "Task 4",
-  leadingTasks: [],
-  status: TaskStatus.new,
-  project: 2,
-  description: "This is a description",
-};
-
-const projectTasks1: ProjectTasksProps = {
-  id: 1,
-  tasks: [taskData1, taskData2],
-  projectName: "ProjectA",
-  isVisibile: true,
-};
-
-const projectTasks2: ProjectTasksProps = {
-  id: 2,
-  tasks: [taskData3, taskData4],
-  projectName: "ProjectB",
-  isVisibile: false,
-};
-
-const projectTasks3: ProjectTasksProps = {
-  id: 3,
-  tasks: [],
-  projectName: "ProjectC",
-  isVisibile: true,
-};
-
-const projectTasks: ProjectTasksProps[] = [
-  projectTasks1,
-  projectTasks2,
-  projectTasks3,
-];
-
-interface ProjectTasksState {
+export interface ProjectTasksState {
   projects: ProjectTasksProps[];
 }
 
 const initialState: ProjectTasksState = {
-  projects: projectTasks,
+  projects: [],
 };
 
 const projectTasksSlice = createSlice({
@@ -104,7 +41,7 @@ const projectTasksSlice = createSlice({
         id: state.projects.length + 1,
         tasks: [],
         projectName: action.payload,
-        isVisibile: true,
+        isVisible: true,
       };
       state.projects.push(newProject);
     },
@@ -159,8 +96,8 @@ const projectTasksSlice = createSlice({
     toggleProjectVisibility(state, action: PayloadAction<number>) {
       state.projects = state.projects.map((project) => {
         project.id === action.payload
-          ? (project.isVisibile = !project.isVisibile)
-          : (project.isVisibile = project.isVisibile);
+          ? (project.isVisible = !project.isVisible)
+          : (project.isVisible = project.isVisible);
         return project;
       });
     },
@@ -198,6 +135,9 @@ const projectTasksSlice = createSlice({
         return project;
       });
     },
+  },
+  extraReducers(builer) {
+    loadProjectTasksReducers(builer);
   },
 });
 
