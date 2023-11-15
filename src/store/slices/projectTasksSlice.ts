@@ -83,9 +83,9 @@ const projectTasksSlice = createSlice({
           project.tasks = project.tasks.map((task) => {
             if (task.id === action.payload.taskId) {
               task.status = (task.status + 1) % 3; // cycle between statuses
-              task.status === TaskStatus.inProgress
-                ? (task.startTime = new Date())
-                : (task.startTime = task.startTime);
+              if (task.status === TaskStatus.inProgress) {
+                task.startTime = new Date();
+              }
             }
             return task;
           });
@@ -95,9 +95,9 @@ const projectTasksSlice = createSlice({
     },
     toggleProjectVisibility(state, action: PayloadAction<number>) {
       state.projects = state.projects.map((project) => {
-        project.id === action.payload
-          ? (project.isVisible = !project.isVisible)
-          : (project.isVisible = project.isVisible);
+        if (project.id === action.payload) {
+          project.isVisible = !project.isVisible;
+        }
         return project;
       });
     },

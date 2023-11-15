@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./Task.css";
 import { TaskProps, TaskStatus } from "../store/slices/projectTasksSlice";
-import { on } from "events";
 
 interface Props {
   task: TaskProps;
