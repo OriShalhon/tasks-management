@@ -1,8 +1,7 @@
 // import axios from "axios"; - to consider for later implementation
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { ProjectTasksProps, ProjectTasksState } from "./projectTasksSlice";
+import { ActionReducerMapBuilder, createAsyncThunk } from "@reduxjs/toolkit";
 import projectDummies from "../../utils/projectsTasksInfo.json";
-import { ActionReducerMapBuilder } from "@reduxjs/toolkit";
+import { ProjectTasksProps, ProjectTasksState } from "./projectTasksSlice";
 
 export const loadProjectTasks = createAsyncThunk(
   "projectTasks/loadProjectTasks",

@@ -1,13 +1,9 @@
 import React, { useState } from "react";
-import "./SideBar.css";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
-import { ProjectTasksProps } from "../store/slices/projectTasksSlice";
-import { useAppDispatch } from "../store/store";
-import {
-  toggleProjectVisibility,
-  addProject,
-} from "../store/slices/projectTasksSlice";
 import { toggleDarkMode } from "../store/slices/appSlice";
+import { ProjectTasksProps, addProject, toggleProjectVisibility } from "../store/slices/projectTasksSlice";
+import { useAppDispatch } from "../store/store";
+import "./SideBar.css";
 
 interface Props {
   isDarkMode: boolean;

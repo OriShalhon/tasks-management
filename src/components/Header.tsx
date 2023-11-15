@@ -1,5 +1,5 @@
 import React from "react";
-import * as FaIcons from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import "./Header.css";
 
 interface HeaderProps {
@@ -11,7 +11,7 @@ const Header: React.FC<HeaderProps> = ({ onToggleSideBar }) => {
     <header>
       <div className="header">
         <button className="menu-bars" onClick={onToggleSideBar}>
-          <FaIcons.FaBars />
+          <FaBars />
         </button>
         <div className="header-right">
           <button className="login-button">Login</button>

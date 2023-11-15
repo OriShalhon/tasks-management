@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import "./App.css";
-import SideBar from "./components/SideBar";
 import CentralComponent from "./components/CentralComponent";
-import Header from "./components/Header";
-import { useAppSelector, useAppDispatch } from "./store/store";
 import "./components/CentralComponent.css";
+import Header from "./components/Header";
+import SideBar from "./components/SideBar";
+
 import { loadProjectTasks } from "./store/slices/projectTasks.thunks";
+import { useAppDispatch, useAppSelector } from "./store/store";
 
 const App: React.FC = () => {
   const projects = useAppSelector((state) => state.projectTasks.projects);
@@ -23,17 +26,19 @@ const App: React.FC = () => {
   return (
     <div className="App">
       <Header onToggleSideBar={onToggleSidebar} />
-      <div className="App Content">
-        <SideBar
-          isDarkMode={darkMode}
-          projects={projects}
-          isSidebarVisible={isSidebarVisible}
-        />
-        <CentralComponent
-          projects={projects}
-          isSideBarVisible={isSidebarVisible}
-        />
-      </div>
+      <DndProvider backend={HTML5Backend}>
+        <div className="App Content">
+          <SideBar
+            isDarkMode={darkMode}
+            projects={projects}
+            isSidebarVisible={isSidebarVisible}
+          />
+          <CentralComponent
+            projects={projects}
+            isSideBarVisible={isSidebarVisible}
+          />
+        </div>
+      </DndProvider>
     </div>
   );
 };
