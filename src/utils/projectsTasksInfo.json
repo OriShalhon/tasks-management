@@ -9,7 +9,7 @@
           "id": 101,
           "headline": "Task Alpha 1",
           "leadingTasks": [],
-          "project": 1,
+          "projectId": 1,
           "status": 0,
           "description": "Description of Task Alpha 1"
         },
@@ -17,7 +17,7 @@
           "id": 102,
           "headline": "Task Alpha 2",
           "leadingTasks": [101],
-          "project": 1,
+          "projectId": 1,
           "status": 1,
           "description": "Description of Task Alpha 2"
         }
@@ -32,7 +32,7 @@
           "id": 201,
           "headline": "Task Beta 1",
           "leadingTasks": [],
-          "project": 2,
+          "projectId": 2,
           "status": 2,
           "description": "Description of Task Beta 1"
         },
@@ -40,7 +40,7 @@
           "id": 202,
           "headline": "Task Beta 2",
           "leadingTasks": [201],
-          "project": 2,
+          "projectId": 2,
           "status": 0,
           "description": "Description of Task Beta 2"
         },
@@ -48,7 +48,7 @@
           "id": 203,
           "headline": "Task Beta 3",
           "leadingTasks": [202],
-          "project": 2,
+          "projectId": 2,
           "status": 1,
           "description": "Description of Task Beta 3"
         }
@@ -63,7 +63,7 @@
           "id": 301,
           "headline": "Task Gamma 1",
           "leadingTasks": [],
-          "project": 3,
+          "projectId": 3,
           "status": 0,
           "description": "Description of Task Gamma 1"
         },
@@ -71,7 +71,7 @@
           "id": 302,
           "headline": "Task Gamma 2",
           "leadingTasks": [301],
-          "project": 3,
+          "projectId": 3,
           "status": 2,
           "description": "Description of Task Gamma 2"
         }

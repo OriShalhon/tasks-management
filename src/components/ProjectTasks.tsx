@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { useDrop } from "react-dnd/dist/hooks";
 import {
+  TaskProps,
   addTaskToProject,
   changeProjectName,
-  deleteTask,
+  deleteTaskFromProject,
   editTaskDescription,
   toggleTaskComplete,
 } from "../store/slices/projectTasksSlice";
@@ -21,12 +23,34 @@ interface Props {
 
 const ProjectTasks: React.FC<Props> = ({ projectData }) => {
   const dispatch = useAppDispatch();
+
   const [newTask, setNewTask] = useState<string>("");
   const [isEditingProjectName, setIsEditingProjectName] =
     useState<boolean>(false);
   const [projectName, setProjectName] = useState<string>(
     projectData.projectName
   );
+
+  const [, drop] = useDrop(() => ({
+    accept: "task",
+    drop: async (item: { taskProp: TaskProps; projectId: number }) => {
+      dispatch(
+        deleteTaskFromProject({
+          projectId: item.projectId,
+          taskId: item.taskProp.id,
+        })
+      );
+      dispatch(
+        addTaskToProject({
+          projectId: projectData.id,
+          task: item.taskProp,
+        })
+      );
+    },
+    collect: (monitor) => ({
+      isOver: !!monitor.isOver(),
+    }),
+  }));
 
   const handleProjectNameClick = () => {
     setIsEditingProjectName(true);
@@ -61,7 +85,7 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
         headline: newTask,
         leadingTasks: [],
         status: TaskStatus.new,
-        project: projectData.id,
+        projectId: projectData.id,
         description: "",
       };
       dispatch(addTaskToProject({ projectId: projectData.id, task }));
@@ -70,7 +94,7 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
   };
 
   return (
-    <div className="projectTasks">
+    <div className="projectTasks" ref={drop}>
       <h1 onClick={handleProjectNameClick}>
         {isEditingProjectName ? (
           <input
@@ -111,7 +135,9 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
               )
             }
             onDeleteTask={(taskId: number) =>
-              dispatch(deleteTask({ projectId: projectData.id, taskId }))
+              dispatch(
+                deleteTaskFromProject({ projectId: projectData.id, taskId })
+              )
             }
             onEditTaskDescription={(taskId: number, description: string) =>
               dispatch(
