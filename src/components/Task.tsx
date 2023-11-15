@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import "./Task.css";
 import { TaskProps, TaskStatus } from "../store/slices/projectTasksSlice";
+import "./Task.css";
 
 interface Props {
   task: TaskProps;

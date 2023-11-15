@@ -1,7 +1,7 @@
 import React from "react";
+import { ProjectTasksProps } from "../store/slices/projectTasksSlice";
 import "./CentralComponent.css";
 import ProjectTasks from "./ProjectTasks";
-import { ProjectTasksProps } from "../store/slices/projectTasksSlice";
 
 interface Props {
   projects: ProjectTasksProps[];

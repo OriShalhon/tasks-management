@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import Task from "./Task";
-import "./ProjectTasks.css";
-import { useAppDispatch } from "../store/store";
 import {
   addTaskToProject,
-  toggleTaskComplete,
+  changeProjectName,
   deleteTask,
   editTaskDescription,
-  changeProjectName,
+  toggleTaskComplete,
 } from "../store/slices/projectTasksSlice";
+import { useAppDispatch } from "../store/store";
+import "./ProjectTasks.css";
+import Task from "./Task";
 
 import {
   ProjectTasksProps,
