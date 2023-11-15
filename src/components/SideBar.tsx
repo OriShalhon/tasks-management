@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import "./SideBar.css";
-import { IconContext } from "react-icons";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
 import { ProjectTasksProps } from "../store/slices/projectTasksSlice";
-import * as FaIcons from "react-icons/fa";
 import { useAppDispatch } from "../store/store";
 import {
   toggleProjectVisibility,

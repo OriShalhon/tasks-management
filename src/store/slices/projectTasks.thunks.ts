@@ -1,5 +1,5 @@
 // import axios from "axios"; - to consider for later implementation
-import { Action, createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import { ProjectTasksProps, ProjectTasksState } from "./projectTasksSlice";
 import projectDummies from "../../utils/projectsTasksInfo.json";
 import { ActionReducerMapBuilder } from "@reduxjs/toolkit";

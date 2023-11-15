@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import * as FaIcons from "react-icons/fa";
 import "./Header.css";
 
@@ -10,13 +10,13 @@ const Header: React.FC<HeaderProps> = ({ onToggleSideBar }) => {
   return (
     <header>
       <div className="header">
-        <a className="menu-bars" onClick={onToggleSideBar}>
+        <button className="menu-bars" onClick={onToggleSideBar}>
           <FaIcons.FaBars />
-        </a>
+        </button>
         <div className="header-right">
-          <a className="login-button">Login</a>
-          <a className="logout-button">Logout</a>
-          <a className="user-info">User Info</a>
+          <button className="login-button">Login</button>
+          <button className="logout-button">Logout</button>
+          <button className="user-info">User Info</button>
         </div>
       </div>
     </header>
