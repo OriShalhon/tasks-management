@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDrag } from "react-dnd";
 import { TaskProps, TaskStatus } from "../store/slices/projectTasksSlice";
 import "./Task.css";
 
@@ -19,6 +20,14 @@ const Task: React.FC<Props> = ({
     useState<boolean>(false);
   const [isEditing, setIsEditing] = useState<boolean>(false);
   const [description, setDescription] = useState<string>(task.description);
+  const [{ isDragging }, drag] = useDrag(() => ({
+    type: "task",
+    item: { taskProp: task, projectId: task.projectId },
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging(),
+    }),
+  }));
+
   const toggleDescription = () => {
     if (!isEditing) {
       setIsDescriptionVisible(!isDescriptionVisible);
@@ -54,6 +63,7 @@ const Task: React.FC<Props> = ({
 
   return (
     <div
+      ref={drag}
       className={`task ${
         task.status === TaskStatus.inProgress
           ? "inProgress"
@@ -62,6 +72,7 @@ const Task: React.FC<Props> = ({
           : ""
       } ${isDescriptionVisible ? "isSelected" : ""}`}
       onClick={toggleDescription}
+      style={isDragging ? { opacity: 0.5 } : { opacity: 1 }}
     >
       <div className="task-info">{task.headline}</div>
       {isDescriptionVisible && (

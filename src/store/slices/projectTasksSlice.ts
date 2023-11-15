@@ -12,7 +12,7 @@ export type TaskProps = {
   headline: string;
   leadingTasks: number[];
   status: TaskStatus;
-  project: number;
+  projectId: number;
   description: string;
   startTime?: Date;
 };
@@ -54,14 +54,19 @@ const projectTasksSlice = createSlice({
       state,
       action: PayloadAction<{ projectId: number; task: TaskProps }>
     ) {
+      const { projectId, task } = action.payload;
+      const newTask: TaskProps = {
+        ...task,
+        projectId,
+      };
       state.projects = state.projects.map((project) => {
         if (project.id === action.payload.projectId) {
-          project.tasks.push(action.payload.task);
+          project.tasks.push(newTask);
         }
         return project;
       });
     },
-    deleteTask(
+    deleteTaskFromProject(
       state,
       action: PayloadAction<{ projectId: number; taskId: number }>
     ) {
@@ -145,7 +150,7 @@ export const {
   addProject,
   removeProject,
   addTaskToProject,
-  deleteTask,
+  deleteTaskFromProject,
   toggleTaskComplete,
   toggleProjectVisibility,
   editTaskDescription,
