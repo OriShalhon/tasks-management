@@ -6,6 +6,7 @@ import {
   changeProjectName,
   deleteTaskFromProject,
   editTaskDescription,
+  removeProject,
   toggleTaskComplete,
 } from "../store/slices/projectTasksSlice";
 import { useAppDispatch } from "../store/store";
@@ -33,7 +34,7 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
 
   const [, drop] = useDrop(() => ({
     accept: "task",
-    drop: async (item: { taskProp: TaskProps; projectId: number }) => {
+    drop: (item: { taskProp: TaskProps; projectId: number }) => {
       dispatch(
         deleteTaskFromProject({
           projectId: item.projectId,
@@ -124,33 +125,45 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
           }}
         />
       </div>
-      <div>
-        {projectData.tasks.map((taskData) => (
-          <Task
-            key={taskData.id}
-            task={taskData}
-            onChangeTaskStatus={(taskId: number) =>
-              dispatch(
-                toggleTaskComplete({ projectId: projectData.id, taskId })
-              )
+      {projectData.tasks.length === 0 ? (
+        <div>
+          <button
+            onClick={() =>
+              dispatch(removeProject({ projectId: projectData.id }))
             }
-            onDeleteTask={(taskId: number) =>
-              dispatch(
-                deleteTaskFromProject({ projectId: projectData.id, taskId })
-              )
-            }
-            onEditTaskDescription={(taskId: number, description: string) =>
-              dispatch(
-                editTaskDescription({
-                  projectId: projectData.id,
-                  taskId,
-                  description,
-                })
-              )
-            }
-          />
-        ))}
-      </div>
+          >
+            Delete Project
+          </button>
+        </div>
+      ) : (
+        <div>
+          {projectData.tasks.map((taskData) => (
+            <Task
+              key={taskData.id}
+              task={taskData}
+              onChangeTaskStatus={(taskId: number) =>
+                dispatch(
+                  toggleTaskComplete({ projectId: projectData.id, taskId })
+                )
+              }
+              onDeleteTask={(taskId: number) =>
+                dispatch(
+                  deleteTaskFromProject({ projectId: projectData.id, taskId })
+                )
+              }
+              onEditTaskDescription={(taskId: number, description: string) =>
+                dispatch(
+                  editTaskDescription({
+                    projectId: projectData.id,
+                    taskId,
+                    description,
+                  })
+                )
+              }
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

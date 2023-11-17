@@ -45,9 +45,9 @@ const projectTasksSlice = createSlice({
       };
       state.projects.push(newProject);
     },
-    removeProject(state, action: PayloadAction<number>) {
+    removeProject(state, action: PayloadAction<{ projectId: number }>) {
       state.projects = state.projects.filter(
-        (project) => project.id !== action.payload
+        (project) => project.id !== action.payload.projectId
       );
     },
     addTaskToProject(
