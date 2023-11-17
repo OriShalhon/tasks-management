@@ -1,8 +1,16 @@
 import React, { useState } from "react";
 import { DarkModeSwitch } from "react-toggle-dark-mode";
-import { toggleDarkMode } from "../store/slices/appSlice";
-import { ProjectTasksProps, addProject, toggleProjectVisibility } from "../store/slices/projectTasksSlice";
-import { useAppDispatch } from "../store/store";
+import {
+  toggleDarkMode,
+  toggleShowFinishedTasks,
+} from "../store/slices/appSlice";
+
+import {
+  ProjectTasksProps,
+  addProject,
+  toggleProjectVisibility,
+} from "../store/slices/projectTasksSlice";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import "./SideBar.css";
 
 interface Props {
@@ -19,6 +27,13 @@ const Sidebar: React.FC<Props> = ({
   const dispatch = useAppDispatch();
   const [newProject, setNewProject] = useState<string>("");
 
+  const showFinishedTasks = useAppSelector(
+    (state) => state.app.showFinishedTasks
+  );
+
+  const onToggleShowFinishedTasks = () => {
+    dispatch(toggleShowFinishedTasks());
+  };
   const onAddProject = () => {
     if (newProject) {
       dispatch(addProject(newProject));
@@ -66,6 +81,15 @@ const Sidebar: React.FC<Props> = ({
           checked={isDarkMode}
           size={24}
         />
+        <div className="sidebar-item">
+          <label htmlFor="showFinishedTasks">Show Finished Tasks</label>
+          <input
+            type="checkbox"
+            id="showFinishedTasks"
+            checked={showFinishedTasks}
+            onChange={onToggleShowFinishedTasks}
+          />
+        </div>
       </div>
     </>
   );

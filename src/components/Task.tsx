@@ -74,7 +74,7 @@ const Task: React.FC<Props> = ({
       onClick={toggleDescription}
       style={isDragging ? { opacity: 0.5 } : { opacity: 1 }}
     >
-      <div className="task-info">{task.headline}</div>
+      <div>{task.headline}</div>
       {isDescriptionVisible && (
         <div onClick={(e) => e.stopPropagation()}>
           {isEditing ? (
