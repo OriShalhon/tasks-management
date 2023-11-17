@@ -9,7 +9,7 @@ import {
   removeProject,
   toggleTaskComplete,
 } from "../store/slices/projectTasksSlice";
-import { useAppDispatch } from "../store/store";
+import { useAppDispatch, useAppSelector } from "../store/store";
 import "./ProjectTasks.css";
 import Task from "./Task";
 
@@ -31,10 +31,15 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
   const [projectName, setProjectName] = useState<string>(
     projectData.projectName
   );
+  const showFinishedTasks = useAppSelector(
+    (state) => state.app.showFinishedTasks
+  );
 
   const [, drop] = useDrop(() => ({
     accept: "task",
-    drop: (item: { taskProp: TaskProps; projectId: number }) => {
+    drop: (item: { taskProp: TaskProps; projectId: number }, monitor) => {
+      const didDrop = monitor.didDrop();
+      console.log("didDrop", didDrop);
       dispatch(
         deleteTaskFromProject({
           projectId: item.projectId,
@@ -137,31 +142,37 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
         </div>
       ) : (
         <div>
-          {projectData.tasks.map((taskData) => (
-            <Task
-              key={taskData.id}
-              task={taskData}
-              onChangeTaskStatus={(taskId: number) =>
-                dispatch(
-                  toggleTaskComplete({ projectId: projectData.id, taskId })
-                )
-              }
-              onDeleteTask={(taskId: number) =>
-                dispatch(
-                  deleteTaskFromProject({ projectId: projectData.id, taskId })
-                )
-              }
-              onEditTaskDescription={(taskId: number, description: string) =>
-                dispatch(
-                  editTaskDescription({
-                    projectId: projectData.id,
-                    taskId,
-                    description,
-                  })
-                )
-              }
-            />
-          ))}
+          {projectData.tasks
+            .filter(
+              (taskData) =>
+                showFinishedTasks || taskData.status !== TaskStatus.done
+            )
+
+            .map((taskData) => (
+              <Task
+                key={taskData.id}
+                task={taskData}
+                onChangeTaskStatus={(taskId: number) =>
+                  dispatch(
+                    toggleTaskComplete({ projectId: projectData.id, taskId })
+                  )
+                }
+                onDeleteTask={(taskId: number) =>
+                  dispatch(
+                    deleteTaskFromProject({ projectId: projectData.id, taskId })
+                  )
+                }
+                onEditTaskDescription={(taskId: number, description: string) =>
+                  dispatch(
+                    editTaskDescription({
+                      projectId: projectData.id,
+                      taskId,
+                      description,
+                    })
+                  )
+                }
+              />
+            ))}
         </div>
       )}
     </div>
