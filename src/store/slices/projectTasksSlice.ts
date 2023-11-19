@@ -1,6 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loadProjectTasksReducers } from "./projectTasks.thunks";
 
+const MAX_HISTORY_LENGTH = 10;
+
 export enum TaskStatus {
   new = 0,
   inProgress,
@@ -26,10 +28,12 @@ export type ProjectTasksProps = {
 
 export interface ProjectTasksState {
   projects: ProjectTasksProps[];
+  history: ProjectTasksProps[][]; // history of projects for undo/redo
 }
 
 const initialState: ProjectTasksState = {
   projects: [],
+  history: [],
 };
 
 const projectTasksSlice = createSlice({
@@ -140,6 +144,23 @@ const projectTasksSlice = createSlice({
         return project;
       });
     },
+    saveStateToHistory(state) {
+      if (state.history.length === MAX_HISTORY_LENGTH) {
+        state.history.shift();
+      }
+      const projectsCopy = state.projects.map((project) => {
+        return {
+          ...project,
+          tasks: project.tasks.map((task) => ({ ...task })),
+        };
+      });
+      state.history.push(projectsCopy);
+    },
+    undo(state) {
+      if (state.history.length > 1) {
+        state.projects = state.history.pop()!;
+      }
+    },
   },
   extraReducers(builer) {
     loadProjectTasksReducers(builer);
@@ -155,6 +176,7 @@ export const {
   toggleProjectVisibility,
   editTaskDescription,
   changeProjectName,
+  undo,
 } = projectTasksSlice.actions;
 
 export default projectTasksSlice.reducer;
