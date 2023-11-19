@@ -9,6 +9,7 @@ import {
   ProjectTasksProps,
   addProject,
   toggleProjectVisibility,
+  undo,
 } from "../store/slices/projectTasksSlice";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import "./SideBar.css";
@@ -75,12 +76,6 @@ const Sidebar: React.FC<Props> = ({
             </li>
           ))}
         </ul>
-        <DarkModeSwitch
-          className="dark-mode-switch"
-          onChange={() => dispatch(toggleDarkMode())}
-          checked={isDarkMode}
-          size={24}
-        />
         <div className="sidebar-item">
           <label htmlFor="showFinishedTasks">Show Finished Tasks</label>
           <input
@@ -90,6 +85,15 @@ const Sidebar: React.FC<Props> = ({
             onChange={onToggleShowFinishedTasks}
           />
         </div>
+        <DarkModeSwitch
+          className="dark-mode-switch"
+          onChange={() => dispatch(toggleDarkMode())}
+          checked={isDarkMode}
+          size={24}
+        />
+        <button className="undo-button" onClick={() => dispatch(undo())}>
+          Undo
+        </button>
       </div>
     </>
   );

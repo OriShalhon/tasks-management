@@ -1,7 +1,17 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, Middleware } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import appSliceReducer from "./slices/appSlice";
 import projectTasksSliceReducer from "./slices/projectTasksSlice";
+
+const saveStateMiddleware: Middleware = (store) => (next) => (action) => {
+  if (
+    action.type !== "projectTasks/saveStateToHistory" &&
+    action.type !== "projectTasks/undo"
+  ) {
+    store.dispatch({ type: "projectTasks/saveStateToHistory" });
+  }
+  return next(action);
+};
 
 const store = configureStore({
   reducer: {
@@ -11,7 +21,7 @@ const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }),
+    }).concat(saveStateMiddleware),
 });
 
 export default store;
