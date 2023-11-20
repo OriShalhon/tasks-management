@@ -83,7 +83,7 @@ const projectTasksSlice = createSlice({
         return project;
       });
     },
-    toggleTaskComplete(
+    cycleTaskStatus(
       state,
       action: PayloadAction<{ projectId: number; taskId: number }>
     ) {
@@ -161,6 +161,26 @@ const projectTasksSlice = createSlice({
         state.projects = state.history.pop()!;
       }
     },
+    changeTaskDependencies(
+      state,
+      action: PayloadAction<{
+        projectId: number;
+        taskId: number;
+        leadingTasks: number[];
+      }>
+    ) {
+      state.projects = state.projects.map((project) => {
+        if (project.id === action.payload.projectId) {
+          project.tasks = project.tasks.map((task) => {
+            if (task.id === action.payload.taskId) {
+              task.leadingTasks = action.payload.leadingTasks;
+            }
+            return task;
+          });
+        }
+        return project;
+      });
+    },
   },
   extraReducers(builer) {
     loadProjectTasksReducers(builer);
@@ -172,7 +192,7 @@ export const {
   removeProject,
   addTaskToProject,
   deleteTaskFromProject,
-  toggleTaskComplete,
+  cycleTaskStatus,
   toggleProjectVisibility,
   editTaskDescription,
   changeProjectName,
