@@ -4,10 +4,10 @@ import {
   TaskProps,
   addTaskToProject,
   changeProjectName,
+  cycleTaskStatus,
   deleteTaskFromProject,
   editTaskDescription,
   removeProject,
-  toggleTaskComplete,
 } from "../store/slices/projectTasksSlice";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import "./ProjectTasks.css";
@@ -154,7 +154,7 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
                 task={taskData}
                 onChangeTaskStatus={(taskId: number) =>
                   dispatch(
-                    toggleTaskComplete({ projectId: projectData.id, taskId })
+                    cycleTaskStatus({ projectId: projectData.id, taskId })
                   )
                 }
                 onDeleteTask={(taskId: number) =>
