@@ -17,6 +17,7 @@ export type TaskProps = {
   projectId: number;
   description: string;
   startTime?: Date;
+  isExpanded?: boolean;
 };
 
 export type ProjectTasksProps = {
@@ -181,6 +182,72 @@ const projectTasksSlice = createSlice({
         return project;
       });
     },
+    toggleTaskExpanded(
+      state,
+      action: PayloadAction<{
+        projectId: number;
+        taskId: number;
+      }>
+    ) {
+      state.projects = state.projects.map((project) => {
+        if (project.id === action.payload.projectId) {
+          project.tasks = project.tasks.map((task) => {
+            if (task.id === action.payload.taskId) {
+              task.isExpanded = !task.isExpanded;
+            }
+            return task;
+          });
+        }
+        return project;
+      });
+    },
+    reorderTasksInProject(
+      state,
+      action: PayloadAction<{
+        projectId: number;
+        sourceIndex: number;
+        destinationIndex: number;
+      }>
+    ) {
+      const { projectId, sourceIndex, destinationIndex } = action.payload;
+      state.projects = state.projects.map((project) => {
+        if (project.id === projectId) {
+          const [removedTask] = project.tasks.splice(sourceIndex, 1);
+          project.tasks.splice(destinationIndex, 0, removedTask);
+        }
+        return project;
+      });
+    },
+    moveTaskToBetweenProjects(
+      state,
+      action: PayloadAction<{
+        sourceProjectId: number;
+        destinationProjectId: number;
+        taskId: number;
+        destinationIndex: number;
+      }>
+    ) {
+      const {
+        sourceProjectId,
+        destinationProjectId,
+        taskId,
+        destinationIndex,
+      } = action.payload;
+      const sourceProject = state.projects.find(
+        (project) => project.id === sourceProjectId
+      );
+      const destinationProject = state.projects.find(
+        (project) => project.id === destinationProjectId
+      );
+
+      if (sourceProject && destinationProject) {
+        const [removedTask] = sourceProject.tasks.splice(
+          sourceProject.tasks.findIndex((task) => task.id === taskId),
+          1
+        );
+        destinationProject.tasks.splice(destinationIndex, 0, removedTask);
+      }
+    },
   },
   extraReducers(builer) {
     loadProjectTasksReducers(builer);
@@ -197,6 +264,9 @@ export const {
   editTaskDescription,
   changeProjectName,
   undo,
+  moveTaskToBetweenProjects,
+  reorderTasksInProject,
+  toggleTaskExpanded,
 } = projectTasksSlice.actions;
 
 export default projectTasksSlice.reducer;
