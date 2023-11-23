@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import "./App.css";
 import CentralComponent from "./components/CentralComponent";
 import "./components/CentralComponent.css";
 import Header from "./components/Header";
 import SideBar from "./components/SideBar";
-
 import { loadProjectTasks } from "./store/slices/projectTasks.thunks";
+import {
+  moveTaskToBetweenProjects,
+  reorderTasksInProject,
+} from "./store/slices/projectTasksSlice";
 import { useAppDispatch, useAppSelector } from "./store/store";
 
 const App: React.FC = () => {
@@ -23,22 +25,51 @@ const App: React.FC = () => {
     setIsSidebarVisible(!isSidebarVisible);
   };
 
+  const onDragEnd = (result: DropResult) => {
+    const { destination, source, draggableId } = result;
+    if (!destination) return;
+    if (destination.droppableId === source.droppableId) {
+      dispatch(
+        reorderTasksInProject({
+          projectId: parseInt(source.droppableId),
+          sourceIndex: source.index,
+          destinationIndex: destination.index,
+        })
+      );
+    } else {
+      const task = projects
+        .find((project) => project.id === parseInt(source.droppableId))
+        ?.tasks.find((task) => task.id === parseInt(draggableId));
+
+      if (!task) return;
+      dispatch(
+        moveTaskToBetweenProjects({
+          taskId: task.id,
+          sourceProjectId: parseInt(source.droppableId),
+          destinationProjectId: parseInt(destination.droppableId),
+          destinationIndex: destination.index,
+        })
+      );
+    }
+  };
+
   return (
     <div className="App">
       <Header onToggleSideBar={onToggleSidebar} />
-      <DndProvider backend={HTML5Backend}>
-        <div className="App Content">
-          <SideBar
-            isDarkMode={darkMode}
-            projects={projects}
-            isSidebarVisible={isSidebarVisible}
-          />
+
+      <div className="App Content">
+        <SideBar
+          isDarkMode={darkMode}
+          projects={projects}
+          isSidebarVisible={isSidebarVisible}
+        />
+        <DragDropContext onDragEnd={onDragEnd}>
           <CentralComponent
             projects={projects}
             isSideBarVisible={isSidebarVisible}
           />
-        </div>
-      </DndProvider>
+        </DragDropContext>
+      </div>
     </div>
   );
 };
