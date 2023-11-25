@@ -1,14 +1,13 @@
 .task {
   background-color: #f1f1f1;
   border-radius: 8px;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   height: 20px;
-  transition: all 0.3s ease-in-out; /* added transition animation */
   position: relative; /* added relative positioning */
-
+  transition: height 0.3s ease-in-out;
   &.isSelected {
     height: 200px;
     outline: none;

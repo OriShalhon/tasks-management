@@ -11,7 +11,8 @@
           "leadingTasks": [],
           "projectId": 1,
           "status": 0,
-          "description": "Description of Task Alpha 1"
+          "description": "Description of Task Alpha 1",
+          "isExpanded": true
         },
         {
           "id": 102,
@@ -19,7 +20,8 @@
           "leadingTasks": [101],
           "projectId": 1,
           "status": 1,
-          "description": "Description of Task Alpha 2"
+          "description": "Description of Task Alpha 2",
+          "isExpanded": false
         }
       ]
     },
@@ -34,7 +36,8 @@
           "leadingTasks": [],
           "projectId": 2,
           "status": 2,
-          "description": "Description of Task Beta 1"
+          "description": "Description of Task Beta 1",
+          "isExpanded": false
         },
         {
           "id": 202,
@@ -42,7 +45,8 @@
           "leadingTasks": [201],
           "projectId": 2,
           "status": 0,
-          "description": "Description of Task Beta 2"
+          "description": "Description of Task Beta 2",
+          "isExpanded": true
         },
         {
           "id": 203,
@@ -50,7 +54,8 @@
           "leadingTasks": [202],
           "projectId": 2,
           "status": 1,
-          "description": "Description of Task Beta 3"
+          "description": "Description of Task Beta 3",
+          "isExpanded": false
         }
       ]
     },
@@ -65,7 +70,8 @@
           "leadingTasks": [],
           "projectId": 3,
           "status": 0,
-          "description": "Description of Task Gamma 1"
+          "description": "Description of Task Gamma 1",
+          "isExpanded": false
         },
         {
           "id": 302,
@@ -73,7 +79,8 @@
           "leadingTasks": [301],
           "projectId": 3,
           "status": 2,
-          "description": "Description of Task Gamma 2"
+          "description": "Description of Task Gamma 2",
+          "isExpanded": true
         }
       ]
     }
