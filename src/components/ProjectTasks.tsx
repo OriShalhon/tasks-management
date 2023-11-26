@@ -66,7 +66,7 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
       const task = {
         id: projectData.tasks.length + 1, //TODO - change behavior of id
         headline: newTask,
-        leadingTasks: [],
+
         status: TaskStatus.new,
         projectId: projectData.id,
         description: "",
