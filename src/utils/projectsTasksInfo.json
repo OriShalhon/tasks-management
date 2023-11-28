@@ -1,88 +1,101 @@
-{
-  "projects": [
-    {
-      "id": 1,
-      "projectName": "Project Alpha",
-      "isVisible": true,
-      "tasks": [
-        {
-          "id": 101,
-          "headline": "Task Alpha 1",
-          "leadingTasks": [],
-          "projectId": 1,
-          "status": 0,
-          "description": "Description of Task Alpha 1",
-          "isExpanded": true
-        },
-        {
-          "id": 102,
-          "headline": "Task Alpha 2",
-          "leadingTasks": [101],
-          "projectId": 1,
-          "status": 1,
-          "description": "Description of Task Alpha 2",
-          "isExpanded": false
-        }
-      ]
-    },
-    {
-      "id": 2,
-      "projectName": "Project Beta",
-      "isVisible": true,
-      "tasks": [
-        {
-          "id": 201,
-          "headline": "Task Beta 1",
-          "leadingTasks": [],
-          "projectId": 2,
-          "status": 2,
-          "description": "Description of Task Beta 1",
-          "isExpanded": false
-        },
-        {
-          "id": 202,
-          "headline": "Task Beta 2",
-          "leadingTasks": [201],
-          "projectId": 2,
-          "status": 0,
-          "description": "Description of Task Beta 2",
-          "isExpanded": true
-        },
-        {
-          "id": 203,
-          "headline": "Task Beta 3",
-          "leadingTasks": [202],
-          "projectId": 2,
-          "status": 1,
-          "description": "Description of Task Beta 3",
-          "isExpanded": false
-        }
-      ]
-    },
-    {
-      "id": 3,
-      "projectName": "Project Gamma",
-      "isVisible": false,
-      "tasks": [
-        {
-          "id": 301,
-          "headline": "Task Gamma 1",
-          "leadingTasks": [],
-          "projectId": 3,
-          "status": 0,
-          "description": "Description of Task Gamma 1",
-          "isExpanded": false
-        },
-        {
-          "id": 302,
-          "headline": "Task Gamma 2",
-          "leadingTasks": [301],
-          "projectId": 3,
-          "status": 2,
-          "description": "Description of Task Gamma 2",
-          "isExpanded": true
-        }
-      ]
-    }
-  ]
-}
+
+  {
+    "boards": [
+      {
+        "id": 1,
+        "boardName": "Board 1",
+        "projects": [
+          {
+            "id": 1,
+            "projectName": "Project Alpha",
+            "isVisible": true,
+            "tasks": [
+              {
+                "id": 101,
+                "headline": "Task Alpha 1",
+                "leadingTasks": [],
+                "projectId": 1,
+                "status": 0,
+                "description": "Description of Task Alpha 1",
+                "isExpanded": true
+              },
+              {
+                "id": 102,
+                "headline": "Task Alpha 2",
+                "leadingTasks": [101],
+                "projectId": 1,
+                "status": 1,
+                "description": "Description of Task Alpha 2",
+                "isExpanded": false
+              }
+            ]
+          },
+          {
+            "id": 2,
+            "projectName": "Project Beta",
+            "isVisible": true,
+            "tasks": [
+              {
+                "id": 201,
+                "headline": "Task Beta 1",
+                "leadingTasks": [],
+                "projectId": 2,
+                "status": 2,
+                "description": "Description of Task Beta 1",
+                "isExpanded": false
+              },
+              {
+                "id": 202,
+                "headline": "Task Beta 2",
+                "leadingTasks": [201],
+                "projectId": 2,
+                "status": 0,
+                "description": "Description of Task Beta 2",
+                "isExpanded": true
+              },
+              {
+                "id": 203,
+                "headline": "Task Beta 3",
+                "leadingTasks": [202],
+                "projectId": 2,
+                "status": 1,
+                "description": "Description of Task Beta 3",
+                "isExpanded": false
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "boardName": "Board 2",
+        "projects": [
+          {
+            "id": 3,
+            "projectName": "Project Gamma",
+            "isVisible": false,
+            "tasks": [
+              {
+                "id": 301,
+                "headline": "Task Gamma 1",
+                "leadingTasks": [],
+                "projectId": 3,
+                "status": 0,
+                "description": "Description of Task Gamma 1",
+                "isExpanded": false
+              },
+              {
+                "id": 302,
+                "headline": "Task Gamma 2",
+                "leadingTasks": [301],
+                "projectId": 3,
+                "status": 2,
+                "description": "Description of Task Gamma 2",
+                "isExpanded": true
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
