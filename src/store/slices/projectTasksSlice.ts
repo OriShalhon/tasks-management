@@ -9,6 +9,12 @@ export enum TaskStatus {
   done,
 }
 
+export type BoardProps = {
+  id: number;
+  name: string;
+  projects: ProjectTasksProps[];
+}
+
 export type TaskProps = {
   id: number;
   headline: string;
