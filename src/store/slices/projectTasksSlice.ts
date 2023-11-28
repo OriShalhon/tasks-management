@@ -18,12 +18,12 @@ export type BoardProps = {
 export type TaskProps = {
   id: number;
   headline: string;
-  leadingTasks: number[];
   status: TaskStatus;
   projectId: number;
   description: string;
   startTime?: Date;
   isExpanded?: boolean;
+  leadingTasks?: number;
 };
 
 export type ProjectTasksProps = {
@@ -173,14 +173,14 @@ const projectTasksSlice = createSlice({
       action: PayloadAction<{
         projectId: number;
         taskId: number;
-        leadingTasks: number[];
+        leadingTaskID: number;
       }>
     ) {
       state.projects = state.projects.map((project) => {
         if (project.id === action.payload.projectId) {
           project.tasks = project.tasks.map((task) => {
             if (task.id === action.payload.taskId) {
-              task.leadingTasks = action.payload.leadingTasks;
+              task.leadingTasks = action.payload.leadingTaskID;
             }
             return task;
           });
@@ -254,6 +254,17 @@ const projectTasksSlice = createSlice({
         destinationProject.tasks.splice(destinationIndex, 0, removedTask);
       }
     },
+    reorderProjects(
+      state,
+      action: PayloadAction<{
+        sourceIndex: number;
+        destinationIndex: number;
+      }>
+    ) {
+      const { sourceIndex, destinationIndex } = action.payload;
+      const [removedProject] = state.projects.splice(sourceIndex, 1);
+      state.projects.splice(destinationIndex, 0, removedProject);
+    },
   },
   extraReducers(builer) {
     loadProjectTasksReducers(builer);
@@ -273,6 +284,8 @@ export const {
   moveTaskToBetweenProjects,
   reorderTasksInProject,
   toggleTaskExpanded,
+  changeTaskDependencies,
+  reorderProjects,
 } = projectTasksSlice.actions;
 
 export default projectTasksSlice.reducer;
