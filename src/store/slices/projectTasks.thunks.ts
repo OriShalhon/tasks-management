@@ -10,6 +10,7 @@ export const loadProjectTasks = createAsyncThunk(
     const Boards: BoardProps[] = projectDummies.boards.map((board) => ({
       id: board.id,
       name: board.boardName,
+      isVisible: board.isVisible,
       projects: board.projects,
     }));
 

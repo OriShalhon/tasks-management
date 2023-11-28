@@ -3,6 +3,7 @@
     {
       "id": 1,
       "boardName": "Board 1",
+      "isVisible": true,
       "projects": [
         {
           "id": 1,
@@ -20,7 +21,7 @@
             {
               "id": 102,
               "headline": "Task Alpha 2",
-              "leadingTasks": [101],
+              "leadingTasks": 101,
               "projectId": 1,
               "status": 1,
               "description": "Description of Task Alpha 2",
@@ -66,6 +67,7 @@
     {
       "id": 2,
       "boardName": "Board 2",
+      "isVisible": false,
       "projects": [
         {
           "id": 3,
