@@ -1,6 +1,7 @@
 import { configureStore, Middleware } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import appSliceReducer from "./slices/appSlice";
+import boardsSliceReducer from "./slices/boardsSlice";
 import projectTasksSliceReducer from "./slices/projectTasksSlice";
 
 const saveStateMiddleware: Middleware = (store) => (next) => (action) => {
@@ -17,6 +18,7 @@ const store = configureStore({
   reducer: {
     app: appSliceReducer,
     projectTasks: projectTasksSliceReducer,
+    boards: boardsSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

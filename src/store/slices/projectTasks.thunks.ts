@@ -1,20 +1,20 @@
 // import axios from "axios"; - to consider for later implementation
 import { ActionReducerMapBuilder, createAsyncThunk } from "@reduxjs/toolkit";
 import projectDummies from "../../utils/projectsTasksInfo.json";
-import { BoardProps, ProjectTasksState } from "./projectTasksSlice";
+import { BoardProps } from "./boardsSlice";
+import { ProjectTasksState } from "./projectTasksSlice";
 
 export const loadProjectTasks = createAsyncThunk(
   "projectTasks/loadProjectTasks",
 
-  async () => {
-    const Boards: BoardProps[] = projectDummies.boards.map((board) => ({
-      id: board.id,
-      name: board.boardName,
-      isVisible: board.isVisible,
-      projects: board.projects,
-    }));
-
-    return Boards;
+  async (boardID: number) => {
+    const BoardData: BoardProps | undefined = projectDummies.boards.find(
+      (board) => board.id === boardID
+    );
+    if (!BoardData) {
+      console.log("Board not found");
+    }
+    return BoardData?.projects;
   }
 );
 
@@ -30,7 +30,6 @@ export const loadProjectTasksReducers = (
     console.log("failed to read json file");
   });
   builder.addCase(loadProjectTasks.fulfilled, (state, action) => {
-    const firstBoard = action.payload[0];
-    state.projects = firstBoard.projects; 
+    action.payload ? (state.projects = action.payload) : (state.projects = []);
   });
 };

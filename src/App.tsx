@@ -5,6 +5,7 @@ import CentralComponent from "./components/CentralComponent";
 import "./components/CentralComponent.css";
 import Header from "./components/Header";
 import SideBar from "./components/SideBar";
+import { loadBasicBoardsData } from "./store/slices/board.thunks";
 import { loadProjectTasks } from "./store/slices/projectTasks.thunks";
 import {
   moveTaskToBetweenProjects,
@@ -15,10 +16,24 @@ import { useAppDispatch, useAppSelector } from "./store/store";
 const App: React.FC = () => {
   const projects = useAppSelector((state) => state.projectTasks.projects);
   const darkMode = useAppSelector((state) => state.app.isDarkMode);
+  const basicBoardsData = useAppSelector((state) => state.boards.boardsData);
+
+  const [boardID, setBoardID] = useState<number>(1);
+
   const dispatch = useAppDispatch();
+
   useEffect(() => {
-    dispatch(loadProjectTasks());
-  }, [dispatch]);
+    dispatch(loadBasicBoardsData())
+      .unwrap()
+      .then((boardsData) => {
+        const visibleBoard = boardsData.find((board) => board.isVisible);
+        if (visibleBoard) {
+          setBoardID(visibleBoard.id);
+          dispatch(loadProjectTasks(visibleBoard.id));
+        }
+      });
+  }, [dispatch, boardID]);
+
   const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(true);
 
   const onToggleSidebar = () => {
@@ -62,6 +77,7 @@ const App: React.FC = () => {
           isDarkMode={darkMode}
           projects={projects}
           isSidebarVisible={isSidebarVisible}
+          boardsData={basicBoardsData}
         />
         <DragDropContext onDragEnd={onDragEnd}>
           <CentralComponent
