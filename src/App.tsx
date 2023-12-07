@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { DragDropContext, DropResult } from "react-beautiful-dnd";
 import "./App.css";
+import BoardsHeader from "./components/BoardsHeader";
 import CentralComponent from "./components/CentralComponent";
 import "./components/CentralComponent.css";
 import Header from "./components/Header";
@@ -70,14 +71,17 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <Header onToggleSideBar={onToggleSidebar} />
+      <Header />
+      <BoardsHeader
+        onToggleSideBar={onToggleSidebar}
+        basicBoardsData={basicBoardsData}
+      />
 
       <div className="App Content">
         <SideBar
           isDarkMode={darkMode}
           projects={projects}
           isSidebarVisible={isSidebarVisible}
-          boardsData={basicBoardsData}
         />
         <DragDropContext onDragEnd={onDragEnd}>
           <CentralComponent
