@@ -5,11 +5,7 @@ import {
   toggleShowFinishedTasks,
 } from "../store/slices/appSlice";
 
-import {
-  BasicBoardProps,
-  changeBoardVisibility,
-} from "../store/slices/boardsSlice";
-import { loadProjectTasks } from "../store/slices/projectTasks.thunks";
+
 import {
   ProjectTasksProps,
   addProject,
@@ -23,14 +19,12 @@ interface Props {
   isDarkMode: boolean;
   projects: ProjectTasksProps[];
   isSidebarVisible: boolean;
-  boardsData: BasicBoardProps[];
 }
 
 const Sidebar: React.FC<Props> = ({
   isDarkMode,
   projects,
   isSidebarVisible,
-  boardsData,
 }) => {
   const dispatch = useAppDispatch();
   const [newProject, setNewProject] = useState<string>("");
@@ -47,11 +41,6 @@ const Sidebar: React.FC<Props> = ({
       dispatch(addProject(newProject));
       setNewProject("");
     }
-  };
-
-  const onChangeBoard = (boardID: number) => {
-    dispatch(loadProjectTasks(boardID));
-    dispatch(changeBoardVisibility({ boardId: boardID }));
   };
 
   return (
@@ -88,19 +77,7 @@ const Sidebar: React.FC<Props> = ({
             </li>
           ))}
         </ul>
-        <ul>
-          {boardsData.map((board) => (
-            <li
-              className={
-                board.isVisible ? "sidebar-item selected" : "sidebar-item"
-              }
-              key={board.id}
-              onClick={() => onChangeBoard(board.id)}
-            >
-              {board.boardName}
-            </li>
-          ))}
-        </ul>
+
         <div className="sidebar-item">
           <label htmlFor="showFinishedTasks">Show Finished Tasks</label>
           <input
