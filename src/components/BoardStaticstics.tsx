@@ -1,6 +1,7 @@
 import React from 'react';
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import './BoardStatistics.css';
 import { ProjectTasksProps, TaskStatus } from '../store/slices/projectTasksSlice';
 
 interface Props {
@@ -27,7 +28,7 @@ const BoardStatistics: React.FC<Props> = ({ projects }) => {
     );
 
     return (
-        <div>
+        <div className = 'boardStatistics'>
             <CircularProgressbar value={finishedPercentage} text={`${finishedPercentage}%`} />;
         </div>
     );

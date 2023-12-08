@@ -6,6 +6,7 @@ export type BasicBoardProps = {
   id: number;
   boardName: string;
   isVisible: boolean;
+  icon?: string;
 };
 
 export type BoardProps = BasicBoardProps & {
