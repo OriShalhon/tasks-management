@@ -4,6 +4,7 @@
       "id": 1,
       "boardName": "Board 1",
       "isVisible": false,
+      "icon": "work",
       "projects": [
         {
           "id": 1,
@@ -95,6 +96,7 @@
       "id": 2,
       "boardName": "Board 2",
       "isVisible": false,
+      "icon": "school",
       "projects": [
         {
           "id": 3,
@@ -186,6 +188,7 @@
       "id": 3,
       "boardName": "Board 3",
       "isVisible": true,
+      "icon": "home",
       "projects": [
         {
           "id": 5,
