@@ -1,5 +1,6 @@
 import React from "react";
 import { ProjectTasksProps } from "../store/slices/projectTasksSlice";
+import BoardStatistics from "./BoardStaticstics";
 import "./CentralComponent.css";
 import ProjectTasks from "./ProjectTasks";
 
@@ -20,6 +21,7 @@ const CentralComponent: React.FC<Props> = ({ projects, isSideBarVisible }) => {
         .map((project) => (
           <ProjectTasks key={project.id} projectData={project} />
         ))}
+      <BoardStatistics projects = {projects}/>
     </div>
   );
 };

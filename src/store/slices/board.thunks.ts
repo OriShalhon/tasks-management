@@ -12,6 +12,7 @@ export const loadBasicBoardsData = createAsyncThunk(
           id: board.id,
           boardName: board.boardName,
           isVisible: board.isVisible,
+          icon: board.icon,
         };
       }
     );

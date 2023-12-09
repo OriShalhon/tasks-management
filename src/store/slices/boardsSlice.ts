@@ -1,11 +1,23 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {
+  IoBriefcaseOutline,
+  IoHomeOutline,
+  IoSchoolOutline,
+} from "react-icons/io5";
 import { loadBoardDataReducers } from "./board.thunks";
 import { ProjectTasksProps } from "./projectTasksSlice";
+
+export const iconMap: { [key: string]: React.ComponentType } = {
+  work: IoBriefcaseOutline,
+  school: IoSchoolOutline,
+  home: IoHomeOutline,
+};
 
 export type BasicBoardProps = {
   id: number;
   boardName: string;
   isVisible: boolean;
+  icon?: string;
 };
 
 export type BoardProps = BasicBoardProps & {
@@ -50,3 +62,8 @@ const boardSlice = createSlice({
 export const { addBoard, removeBoard, changeBoardVisibility } =
   boardSlice.actions;
 export default boardSlice.reducer;
+
+export const getIconByName = (iconName: string): React.ComponentType => {
+  const icon = iconMap[iconName];
+  return icon;
+};

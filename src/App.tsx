@@ -19,8 +19,6 @@ const App: React.FC = () => {
   const darkMode = useAppSelector((state) => state.app.isDarkMode);
   const basicBoardsData = useAppSelector((state) => state.boards.boardsData);
 
-  const [boardID, setBoardID] = useState<number>(1);
-
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -29,11 +27,10 @@ const App: React.FC = () => {
       .then((boardsData) => {
         const visibleBoard = boardsData.find((board) => board.isVisible);
         if (visibleBoard) {
-          setBoardID(visibleBoard.id);
           dispatch(loadProjectTasks(visibleBoard.id));
         }
       });
-  }, [dispatch, boardID]);
+  }, [dispatch]);
 
   const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(true);
 
@@ -82,6 +79,10 @@ const App: React.FC = () => {
           isDarkMode={darkMode}
           projects={projects}
           isSidebarVisible={isSidebarVisible}
+          activeBoardName={
+            basicBoardsData.find((board) => board.isVisible === true)
+              ?.boardName ?? ""
+          }
         />
         <DragDropContext onDragEnd={onDragEnd}>
           <CentralComponent

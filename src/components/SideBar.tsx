@@ -5,7 +5,6 @@ import {
   toggleShowFinishedTasks,
 } from "../store/slices/appSlice";
 
-
 import {
   ProjectTasksProps,
   addProject,
@@ -19,12 +18,14 @@ interface Props {
   isDarkMode: boolean;
   projects: ProjectTasksProps[];
   isSidebarVisible: boolean;
+  activeBoardName: string;
 }
 
 const Sidebar: React.FC<Props> = ({
   isDarkMode,
   projects,
   isSidebarVisible,
+  activeBoardName,
 }) => {
   const dispatch = useAppDispatch();
   const [newProject, setNewProject] = useState<string>("");
@@ -51,6 +52,7 @@ const Sidebar: React.FC<Props> = ({
         }
       >
         <div className="sidebar-item">
+          <h2>{activeBoardName}</h2>
           <input
             className="input"
             type="text"
