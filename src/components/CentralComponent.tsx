@@ -1,6 +1,6 @@
 import React from "react";
 import { ProjectTasksProps } from "../store/slices/projectTasksSlice";
-import BoardStatistics from "./BoardStaticstics";
+import BoardStatistics from "./BoardStatistics";
 import "./CentralComponent.css";
 import ProjectTasks from "./ProjectTasks";
 
