@@ -255,6 +255,7 @@ const projectTasksSlice = createSlice({
         destinationIndex: number;
       }>
     ) {
+      //TODO: fix changing order in case some projects are hidden
       const { sourceIndex, destinationIndex } = action.payload;
       const [removedProject] = state.projects.splice(sourceIndex, 1);
       state.projects.splice(destinationIndex, 0, removedProject);

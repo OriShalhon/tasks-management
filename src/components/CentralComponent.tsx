@@ -1,5 +1,12 @@
 import React from "react";
-import { ProjectTasksProps } from "../store/slices/projectTasksSlice";
+import { DragDropContext, DropResult, Droppable } from "react-beautiful-dnd";
+import {
+  ProjectTasksProps,
+  moveTaskToBetweenProjects,
+  reorderProjects,
+  reorderTasksInProject,
+} from "../store/slices/projectTasksSlice";
+import { useAppDispatch } from "../store/store";
 import BoardStatistics from "./BoardStatistics";
 import "./CentralComponent.css";
 import ProjectTasks from "./ProjectTasks";
@@ -10,19 +17,72 @@ interface Props {
 }
 
 const CentralComponent: React.FC<Props> = ({ projects, isSideBarVisible }) => {
+  const dispatch = useAppDispatch();
+  const onDragEnd = (result: DropResult) => {
+    const { destination, source, draggableId } = result;
+
+    if (!destination) return;
+
+    if (destination.droppableId === "centralComponent") {
+      dispatch(
+        reorderProjects({
+          sourceIndex: source.index,
+          destinationIndex: destination.index,
+        })
+      );
+    } else if (destination.droppableId === source.droppableId) {
+      dispatch(
+        reorderTasksInProject({
+          projectId: parseInt(source.droppableId),
+          sourceIndex: source.index,
+          destinationIndex: destination.index,
+        })
+      );
+    } else {
+      const task = projects
+        .find((project) => project.id === parseInt(source.droppableId))
+        ?.tasks.find((task) => task.id === parseInt(draggableId));
+
+      if (!task) return;
+      dispatch(
+        moveTaskToBetweenProjects({
+          taskId: task.id,
+          sourceProjectId: parseInt(source.droppableId),
+          destinationProjectId: parseInt(destination.droppableId),
+          destinationIndex: destination.index,
+        })
+      );
+    }
+  };
+
   return (
-    <div
-      className={
-        isSideBarVisible ? "centralComponent" : "centralComponent large"
-      }
-    >
-      {projects
-        .filter((project) => project.isVisible)
-        .map((project) => (
-          <ProjectTasks key={project.id} projectData={project} />
-        ))}
-      <BoardStatistics projects = {projects}/>
-    </div>
+    <>
+      <DragDropContext onDragEnd={onDragEnd}>
+        <Droppable
+          droppableId="centralComponent"
+          type="project"
+          direction="horizontal"
+        >
+          {(provided) => (
+            <div
+              className={
+                isSideBarVisible ? "centralComponent" : "centralComponent large"
+              }
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              {projects
+                .filter((project) => project.isVisible)
+                .map((project, index) => (
+                  <ProjectTasks key={project.id} projectData={project} index={index} />
+                ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
+        <BoardStatistics projects={projects} />
+      </DragDropContext>
+    </>
   );
 };
 
