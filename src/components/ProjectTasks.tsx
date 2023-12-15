@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Droppable } from "react-beautiful-dnd";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 import {
   addTaskToProject,
   changeProjectName,
@@ -19,10 +19,11 @@ import {
 } from "../store/slices/projectTasksSlice";
 
 interface Props {
+  index: number;
   projectData: ProjectTasksProps;
 }
 
-const ProjectTasks: React.FC<Props> = ({ projectData }) => {
+const ProjectTasks: React.FC<Props> = ({ projectData, index }) => {
   const dispatch = useAppDispatch();
 
   const [newTask, setNewTask] = useState<string>("");
@@ -77,103 +78,116 @@ const ProjectTasks: React.FC<Props> = ({ projectData }) => {
   };
 
   return (
-    <div className="projectTasks">
-      <h1 onClick={handleProjectNameClick}>
-        {isEditingProjectName ? (
-          <input
-            className="input"
-            type="text"
-            value={projectName}
-            onChange={handleProjectNameChange}
-            onKeyDown={handleProjectNameKeyDown}
-            onBlur={() => setIsEditingProjectName(false)}
-            autoFocus
-          />
-        ) : (
-          projectName
-        )}
-      </h1>
-      <div>
-        <input
-          className="input"
-          type="text"
-          placeholder="Enter new task"
-          value={newTask}
-          onChange={(e) => setNewTask(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              addTask();
-            }
-          }}
-        />
-      </div>
-      <Droppable droppableId={projectData.id.toString()}>
-        {(provided) => (
-          <div ref={provided.innerRef} {...provided.droppableProps}>
-            {projectData.tasks.length === 0 ? (
-              <div>
-                <button
-                  onClick={() =>
-                    dispatch(removeProject({ projectId: projectData.id }))
-                  }
-                >
-                  Delete Project
-                </button>
-              </div>
+    <Draggable draggableId={String(projectData.id)} index={index}>
+      {(provided) => (
+        <div
+          className="projectTasks"
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+        >
+          <h1 onClick={handleProjectNameClick}>
+            {isEditingProjectName ? (
+              <input
+                className="input"
+                type="text"
+                value={projectName}
+                onChange={handleProjectNameChange}
+                onKeyDown={handleProjectNameKeyDown}
+                onBlur={() => setIsEditingProjectName(false)}
+                autoFocus
+              />
             ) : (
-              <>
-                {projectData.tasks
-                  .filter(
-                    (taskData) =>
-                      showFinishedTasks || taskData.status !== TaskStatus.done
-                  )
-                  .map((taskData, index) => (
-                    <Task
-                      index={index}
-                      key={taskData.id}
-                      task={taskData}
-                      onChangeTaskStatus={(taskId: number) =>
-                        dispatch(
-                          cycleTaskStatus({ projectId: projectData.id, taskId })
-                        )
-                      }
-                      onDeleteTask={(taskId: number) =>
-                        dispatch(
-                          deleteTaskFromProject({
-                            projectId: projectData.id,
-                            taskId,
-                          })
-                        )
-                      }
-                      onEditTaskDescription={(
-                        taskId: number,
-                        description: string
-                      ) =>
-                        dispatch(
-                          editTaskDescription({
-                            projectId: projectData.id,
-                            taskId,
-                            description,
-                          })
-                        )
-                      }
-                      onExpandTask={(taskId: number) =>
-                        dispatch(
-                          toggleTaskExpanded({
-                            projectId: projectData.id,
-                            taskId,
-                          })
-                        )
-                      }
-                    />
-                  ))}
-              </>
+              projectName
             )}
-            {provided.placeholder}
+          </h1>
+          <div>
+            <input
+              className="input"
+              type="text"
+              placeholder="Enter new task"
+              value={newTask}
+              onChange={(e) => setNewTask(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  addTask();
+                }
+              }}
+            />
           </div>
-        )}
-      </Droppable>
-    </div>
+          <Droppable droppableId={projectData.id.toString()}>
+            {(provided) => (
+              <div ref={provided.innerRef} {...provided.droppableProps}>
+                {projectData.tasks.length === 0 ? (
+                  <div>
+                    <button
+                      onClick={() =>
+                        dispatch(removeProject({ projectId: projectData.id }))
+                      }
+                    >
+                      Delete Project
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    {projectData.tasks
+                      .filter(
+                        (taskData) =>
+                          showFinishedTasks ||
+                          taskData.status !== TaskStatus.done
+                      )
+                      .map((taskData, index) => (
+                        <Task
+                          index={index}
+                          key={taskData.id}
+                          task={taskData}
+                          onChangeTaskStatus={(taskId: number) =>
+                            dispatch(
+                              cycleTaskStatus({
+                                projectId: projectData.id,
+                                taskId,
+                              })
+                            )
+                          }
+                          onDeleteTask={(taskId: number) =>
+                            dispatch(
+                              deleteTaskFromProject({
+                                projectId: projectData.id,
+                                taskId,
+                              })
+                            )
+                          }
+                          onEditTaskDescription={(
+                            taskId: number,
+                            description: string
+                          ) =>
+                            dispatch(
+                              editTaskDescription({
+                                projectId: projectData.id,
+                                taskId,
+                                description,
+                              })
+                            )
+                          }
+                          onExpandTask={(taskId: number) =>
+                            dispatch(
+                              toggleTaskExpanded({
+                                projectId: projectData.id,
+                                taskId,
+                              })
+                            )
+                          }
+                        />
+                      ))}
+                  </>
+                )}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
+        </div>
+      )}
+    </Draggable>
   );
 };
 
