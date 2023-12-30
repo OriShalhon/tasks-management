@@ -92,6 +92,8 @@ const CentralComponent: React.FC<Props> = ({
                   display: "flex",
                   flexDirection: "column",
                   marginLeft: "auto",
+                  position: "absolute",
+                  right: "0",
                 }}
               >
                 {/* TODO - place this in a separate component */}
