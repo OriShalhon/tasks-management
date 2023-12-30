@@ -1,3 +1,9 @@
 .projectTasks {
+  margin: 10px;
   padding: 10px;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 1px 1px 10px -3px rgba(0, 0, 0, 0.25);
+  width: 375px;
+  height: fit-content;
 }
