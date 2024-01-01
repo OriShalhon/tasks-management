@@ -9,14 +9,21 @@ import {
 import { useAppDispatch } from "../store/store";
 import BoardStatistics from "./BoardStatistics";
 import "./CentralComponent.css";
+import DailyPlanner from "./DailyPlanner";
 import ProjectTasks from "./ProjectTasks";
-
 interface Props {
   projects: ProjectTasksProps[];
   isSideBarVisible: boolean;
+  isStatisticsVisible: boolean;
+  isDailyPlannerVisible: boolean;
 }
 
-const CentralComponent: React.FC<Props> = ({ projects, isSideBarVisible }) => {
+const CentralComponent: React.FC<Props> = ({
+  projects,
+  isSideBarVisible,
+  isDailyPlannerVisible,
+  isStatisticsVisible,
+}) => {
   const dispatch = useAppDispatch();
   const onDragEnd = (result: DropResult) => {
     const { destination, source, draggableId } = result;
@@ -74,13 +81,29 @@ const CentralComponent: React.FC<Props> = ({ projects, isSideBarVisible }) => {
               {projects
                 .filter((project) => project.isVisible)
                 .map((project, index) => (
-                  <ProjectTasks key={project.id} projectData={project} index={index} />
+                  <ProjectTasks
+                    key={project.id}
+                    projectData={project}
+                    index={index}
+                  />
                 ))}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  marginLeft: "auto",
+                  position: "absolute",
+                  right: "0",
+                }}
+              >
+                {/* TODO - place this in a separate component */}
+                {isStatisticsVisible && <BoardStatistics projects={projects} />}
+                {isDailyPlannerVisible && <DailyPlanner />}
+              </div>
               {provided.placeholder}
             </div>
           )}
         </Droppable>
-        <BoardStatistics projects={projects} />
       </DragDropContext>
     </>
   );

@@ -32,6 +32,7 @@ const BoardStatistics: React.FC<Props> = ({ projects }) => {
 
   return (
     <div className="boardStatistics">
+      {/* <ImStatsBars /> */}
       <CircularProgressbar
         value={finishedPercentage}
         text={`${finishedPercentage}%`}

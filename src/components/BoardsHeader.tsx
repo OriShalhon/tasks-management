@@ -1,5 +1,8 @@
 import React from "react";
 import { FaBars } from "react-icons/fa";
+import { ImStatsBars } from "react-icons/im";
+import { SlCalender } from "react-icons/sl";
+
 import {
   BasicBoardProps,
   changeBoardVisibility,
@@ -13,11 +16,19 @@ import "./BoardsHeader.css";
 interface BoardsHeaderProps {
   onToggleSideBar: () => void;
   basicBoardsData: BasicBoardProps[];
+  onToggleStatistics: () => void;
+  onToggleDailyPlanner: () => void;
+  isStatisticsVisible: boolean;
+  isDailyPlannerVisible: boolean;
 }
 
 const BoardsHeader: React.FC<BoardsHeaderProps> = ({
   onToggleSideBar,
   basicBoardsData,
+  onToggleStatistics,
+  onToggleDailyPlanner,
+  isStatisticsVisible,
+  isDailyPlannerVisible,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -48,6 +59,27 @@ const BoardsHeader: React.FC<BoardsHeaderProps> = ({
             );
           })}
         </ul>
+        <div
+          style={{
+            marginLeft: "auto",
+          }}
+        >
+          <button
+            className={`dailyButton ${isDailyPlannerVisible ? "selected" : ""}`}
+            onClick={onToggleDailyPlanner}
+          >
+            <SlCalender />
+          </button>
+
+          <button
+            className={`statisticsButton ${
+              isStatisticsVisible ? "selected" : ""
+            }`}
+            onClick={onToggleStatistics}
+          >
+            <ImStatsBars />
+          </button>
+        </div>
       </div>
     </header>
   );

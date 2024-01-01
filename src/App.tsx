@@ -29,9 +29,20 @@ const App: React.FC = () => {
   }, [dispatch]);
 
   const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(true);
+  const [isStatisticsVisible, setIsStatisticsVisible] = useState<boolean>(true);
+  const [isDailyPlannerVisible, setIsDailyPlannerVisible] =
+    useState<boolean>(true);
 
   const onToggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
+  };
+
+  const onToggleStatistics = () => {
+    setIsStatisticsVisible(!isStatisticsVisible);
+  };
+
+  const onToggleDailyPlanner = () => {
+    setIsDailyPlannerVisible(!isDailyPlannerVisible);
   };
 
   return (
@@ -40,6 +51,10 @@ const App: React.FC = () => {
       <BoardsHeader
         onToggleSideBar={onToggleSidebar}
         basicBoardsData={basicBoardsData}
+        onToggleStatistics={onToggleStatistics}
+        onToggleDailyPlanner={onToggleDailyPlanner}
+        isStatisticsVisible={isStatisticsVisible}
+        isDailyPlannerVisible={isDailyPlannerVisible}
       />
 
       <div className="App Content">
@@ -55,6 +70,8 @@ const App: React.FC = () => {
         <CentralComponent
           projects={projects}
           isSideBarVisible={isSidebarVisible}
+          isStatisticsVisible={isStatisticsVisible}
+          isDailyPlannerVisible={isDailyPlannerVisible}
         />
       </div>
     </div>

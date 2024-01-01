@@ -1,7 +1,9 @@
 .boardsHeader {
+  display: flex;
   overflow: hidden;
   background-color: #e9e9e9;
   & button {
+    background: none;
     border: none;
     float: left;
     color: black;
@@ -18,8 +20,8 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    display: flex; /* Added this line */
-    flex-direction: row; /* Added this line */
+    display: flex;
+    flex-direction: row;
   }
   & li:hover {
     background-color: #ddd;
@@ -40,4 +42,16 @@
 .menu-bars {
   font-size: 2rem;
   background: none;
+}
+
+.statisticsButton.selected {
+  background-color: #b7b7b7;
+  color: white;
+  border-radius: 5px;
+}
+
+.dailyButton.selected {
+  background-color: #b7b7b7;
+  color: white;
+  border-radius: 5px;
 }

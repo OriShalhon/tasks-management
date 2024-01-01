@@ -1,0 +1,25 @@
+App
+│
+├── Header
+│
+├── Sidebar(all boards)
+│
+└── CentralComponent(single board)
+    │
+    ├── Board
+    │   │
+    │   ├── BoardStatistics
+    │   │
+    │   └── ProjectList
+    │       │
+    │       ├── Project
+    │       │   │
+    │       │   └── Task
+    │       │
+    │       └── Project
+    │           │
+    │           └── Task
+    │
+    └── DailyPlanner
+        │
+        └── Tasks list
