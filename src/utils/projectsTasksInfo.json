@@ -264,5 +264,67 @@
         }
       ]
     }
-  ]
+  ],
+  "dailyPlanner": {
+    "morningTasks": [
+      {
+        "id": 101,
+        "headline": "Task Alpha 1",
+        "timeOfDay": 0,
+        "isDone": false
+      },
+      {
+        "id": 201,
+        "headline": "Task Beta 1",
+        "timeOfDay": 0,
+        "isDone": false
+      },
+      {
+        "id": 301,
+        "headline": "Task Gamma 1",
+        "timeOfDay": 0,
+        "isDone": true
+      }
+    ],
+    "afternoonTasks": [
+      {
+        "id": 102,
+        "headline": "Task Alpha 2",
+        "timeOfDay": 1,
+        "isDone": false
+      },
+      {
+        "id": 202,
+        "headline": "Task Beta 2",
+        "timeOfDay": 1,
+        "isDone": false
+      },
+      {
+        "id": 302,
+        "headline": "Task Gamma 2",
+        "timeOfDay": 1,
+        "isDone": false
+      }
+    ],
+    "eveningTasks": [
+      {
+        "id": 401,
+        "headline": "Task Delta 1",
+        "timeOfDay": 2,
+        "isDone": false
+      },
+      {
+        "id": 501,
+        "headline": "Task Epsilon 1",
+        "timeOfDay": 2,
+        "isDone": false
+      },
+      {
+        "id": 601,
+        "headline": "Task Zeta 1",
+        "timeOfDay": 2,
+        "isDone": false
+      }
+    ]
+  }
 }
