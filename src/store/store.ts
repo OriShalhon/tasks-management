@@ -2,6 +2,7 @@ import { configureStore, Middleware } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import appSliceReducer from "./slices/appSlice";
 import boardsSliceReducer from "./slices/boardsSlice";
+import dailyPlannerSliceReducer from "./slices/dailyPlannerSlice";
 import projectTasksSliceReducer from "./slices/projectTasksSlice";
 
 const saveStateMiddleware: Middleware = (store) => (next) => (action) => {
@@ -19,6 +20,7 @@ const store = configureStore({
     app: appSliceReducer,
     projectTasks: projectTasksSliceReducer,
     boards: boardsSliceReducer,
+    dailyPlanner: dailyPlannerSliceReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

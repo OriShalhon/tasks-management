@@ -1,0 +1,8 @@
+.dailyTask {
+  border-radius: 5px;
+  background-color: #ffffff;
+  color: #3c3e3e;
+  &.crossed {
+    text-decoration: line-through;
+  }
+}
