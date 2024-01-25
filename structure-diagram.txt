@@ -2,6 +2,8 @@ App
 │
 ├── Header
 │
+├───BoardsHeader
+│
 ├── Sidebar(all boards)
 │
 └── CentralComponent(single board)
@@ -22,4 +24,14 @@ App
     │
     └── DailyPlanner
         │
-        └── Tasks list
+        ├── DailyPlannerGroup (morning)
+        │   │
+        │   └── DailyTask (multiple instances)
+        │
+        ├── DailyPlannerGroup (afternoon)
+        │   │
+        │   └── DailyTask (multiple instances)
+        │
+        └── DailyPlannerGroup (evening)
+            │
+            └── DailyTask (multiple instances)
