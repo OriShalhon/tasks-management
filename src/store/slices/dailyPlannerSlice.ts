@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loadDailyPlannerReducers } from "./dailyPlanner.thunks";
+import { TaskProps } from "./projectTasksSlice";
 
 export enum timeOfDay {
   morning = 0,
@@ -17,6 +18,7 @@ export type DailyTaskProps = {
   headline: string;
   isDone: boolean;
   timeOfDay: timeOfDay;
+  parentId: number;
 };
 
 export interface DailyPlannerState {
@@ -37,17 +39,24 @@ const dailyPlannerSlice = createSlice({
   reducers: {
     addTaskByTime: (
       state,
-      action: PayloadAction<{ Task: DailyTaskProps; time: timeOfDay }>
+      action: PayloadAction<{ Task: TaskProps; time: timeOfDay }>
     ) => {
+      const newTask = {
+        id: action.payload.Task.id, //TODO - add uniqueId behavior
+        headline: action.payload.Task.headline,
+        isDone: false,
+        timeOfDay: action.payload.time,
+        parentId: action.payload.Task.id,
+      };
       switch (action.payload.time) {
         case timeOfDay.morning:
-          state.morningTasks.push(action.payload.Task);
+          state.morningTasks.push(newTask);
           break;
         case timeOfDay.afternoon:
-          state.afternoonTasks.push(action.payload.Task);
+          state.afternoonTasks.push(newTask);
           break;
         case timeOfDay.evening:
-          state.eveningTasks.push(action.payload.Task);
+          state.eveningTasks.push(newTask);
           break;
         default:
           break;

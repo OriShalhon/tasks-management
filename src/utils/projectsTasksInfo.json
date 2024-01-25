@@ -271,19 +271,22 @@
         "id": 101,
         "headline": "Task Alpha 1",
         "timeOfDay": 0,
-        "isDone": false
+        "isDone": false,
+        "parentId": 101
       },
       {
         "id": 201,
         "headline": "Task Beta 1",
         "timeOfDay": 0,
-        "isDone": false
+        "isDone": false,
+        "parentId": 201
       },
       {
         "id": 301,
         "headline": "Task Gamma 1",
         "timeOfDay": 0,
-        "isDone": true
+        "isDone": true,
+        "parentId": 301
       }
     ],
     "afternoonTasks": [
@@ -291,19 +294,22 @@
         "id": 102,
         "headline": "Task Alpha 2",
         "timeOfDay": 1,
-        "isDone": false
+        "isDone": false,
+        "parentId": 101
       },
       {
         "id": 202,
         "headline": "Task Beta 2",
         "timeOfDay": 1,
-        "isDone": false
+        "isDone": false,
+        "parentId": 201
       },
       {
         "id": 302,
         "headline": "Task Gamma 2",
         "timeOfDay": 1,
-        "isDone": false
+        "isDone": false,
+        "parentId": 301
       }
     ],
     "eveningTasks": [
@@ -311,19 +317,22 @@
         "id": 401,
         "headline": "Task Delta 1",
         "timeOfDay": 2,
-        "isDone": false
+        "isDone": false,
+        "parentId": 401
       },
       {
         "id": 501,
         "headline": "Task Epsilon 1",
         "timeOfDay": 2,
-        "isDone": false
+        "isDone": false,
+        "parentId": 501
       },
       {
         "id": 601,
         "headline": "Task Zeta 1",
         "timeOfDay": 2,
-        "isDone": false
+        "isDone": false,
+        "parentId": 601
       }
     ]
   }
