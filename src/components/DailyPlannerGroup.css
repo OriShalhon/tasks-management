@@ -1,0 +1,40 @@
+.dailyPlannerGroup {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin: 5px 0;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.1);
+}
+
+.dailyPlannerGroup button {
+  padding: 8px 16px;
+  margin-bottom: 20px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.dailyPlannerGroup button:hover {
+  background-color: #0056b3;
+}
+
+.dailyPlannerGroup .tasksContainer {
+  width: 100%;
+}
+
+/* This class is applied to the task container when the group is expanded */
+.expanded {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* This class is applied to the task container when the group is collapsed */
+.collapsed {
+  display: none;
+}
