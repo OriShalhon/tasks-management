@@ -9,7 +9,6 @@ import {
   ProjectTasksProps,
   addProject,
   toggleProjectVisibility,
-  undo,
 } from "../store/slices/projectTasksSlice";
 import { useAppDispatch, useAppSelector } from "../store/store";
 import "./SideBar.css";
@@ -95,9 +94,6 @@ const Sidebar: React.FC<Props> = ({
           checked={isDarkMode}
           size={24}
         />
-        <button className="undo-button" onClick={() => dispatch(undo())}>
-          Undo
-        </button>
       </div>
     </>
   );
