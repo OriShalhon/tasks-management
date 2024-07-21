@@ -1,8 +1,23 @@
 .dailyTask {
-  border-radius: 5px;
+  width: 100%; /* Set a fixed width to form a square shape */
+  height: 100px; /* Set a fixed height to match the width */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px; /* Add some margin for spacing between tasks */
+  border-radius: 10px; /* Increase border-radius for a more modern, rounded look */
   background-color: #ffffff;
   color: #3c3e3e;
-  &.crossed {
-    text-decoration: line-through;
-  }
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+  transition: transform 0.3s ease-in-out; /* Smooth transition for hover effect */
+}
+
+.dailyTask.crossed {
+  text-decoration: line-through;
+}
+
+.dailyTask:hover {
+  transform: scale(
+    1.05
+  ); /* Slightly enlarge task on hover for interactive feedback */
 }

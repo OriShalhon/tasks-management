@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { DailyTaskProps } from "../store/slices/dailyPlannerSlice";
 import DailyTask from "./DailyTask";
 
+import "./DailyPlannerGroup.css";
 interface DailyPlannerGroupProps {
   tasks: DailyTaskProps[];
 }
@@ -13,7 +14,7 @@ const DailyPlannerGroup: React.FC<DailyPlannerGroupProps> = ({ tasks }) => {
   };
 
   return (
-    <div>
+    <div className="dailyPlannerGroup">
       <button onClick={toggleExpanded}>Toggle</button>
       {isExpanded && (
         <div>
