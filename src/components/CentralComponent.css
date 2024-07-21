@@ -1,4 +1,5 @@
 .centralComponent {
+  position: relative;
   display: flex;
   height: 100vh;
   transition: 350ms;
@@ -6,4 +7,27 @@
   &.large {
     margin-left: -250px;
   }
+}
+.undo-button {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 70px;
+  height: 70px;
+  margin: 10px;
+  opacity: 75%;
+  background-color: lightblue;
+  border-color: lightblue;
+  border-radius: 15px;
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 24px; /* Adjust size as needed */
+}
+
+.undo-button::before {
+  content: "⬅"; /* Unicode left arrow, consider using an icon font or SVG for more flexibility */
+  display: block;
 }

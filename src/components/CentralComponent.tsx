@@ -5,6 +5,7 @@ import {
   moveTaskToBetweenProjects,
   reorderProjects,
   reorderTasksInProject,
+  undo,
 } from "../store/slices/projectTasksSlice";
 import { useAppDispatch } from "../store/store";
 import BoardStatistics from "./BoardStatistics";
@@ -100,6 +101,10 @@ const CentralComponent: React.FC<Props> = ({
                 {isStatisticsVisible && <BoardStatistics projects={projects} />}
                 {isDailyPlannerVisible && <DailyPlanner />}
               </div>
+              <button
+                className="undo-button"
+                onClick={() => dispatch(undo())}
+              ></button>
               {provided.placeholder}
             </div>
           )}
