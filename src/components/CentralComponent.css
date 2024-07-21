@@ -7,6 +7,23 @@
   &.large {
     margin-left: -250px;
   }
+  background-size: cover;
+  background-position: center;
+  overflow: hidden; /* Ensure the pseudo-element does not overflow the container */
+}
+
+.centralComponent::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../../extras/pexels-photo-355747.jpeg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.5; /* Adjust the opacity to achieve the desired dimmed effect */
+  z-index: -1; /* Ensure the overlay is behind the content */
 }
 .undo-button {
   position: absolute;
