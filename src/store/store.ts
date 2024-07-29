@@ -6,10 +6,11 @@ import dailyPlannerSliceReducer from "./slices/dailyPlannerSlice";
 import projectTasksSliceReducer from "./slices/projectTasksSlice";
 
 const saveStateMiddleware: Middleware = (store) => (next) => (action) => {
-  if (
-    action.type !== "projectTasks/saveStateToHistory" &&
-    action.type !== "projectTasks/undo"
-  ) {
+  if (action.meta?.saveToHistory) {
+    console.log(
+      "Reached save to history middleware with action type:",
+      action.type
+    );
     store.dispatch({ type: "projectTasks/saveStateToHistory" });
   }
   return next(action);
