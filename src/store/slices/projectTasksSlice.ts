@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loadProjectTasksReducers } from "./projectTasks.thunks";
-
 const MAX_HISTORY_LENGTH = 10;
 
 export enum TaskStatus {
@@ -37,11 +36,21 @@ const initialState: ProjectTasksState = {
   history: [],
 };
 
+const withSaveToHistory = <T>(
+  reducer: (state: ProjectTasksState, action: PayloadAction<T>) => void
+) => ({
+  reducer,
+  prepare: (payload: T) => ({
+    payload,
+    meta: { saveToHistory: true },
+  }),
+});
+
 const projectTasksSlice = createSlice({
   name: "projectTasks",
   initialState,
   reducers: {
-    addProject(state, action: PayloadAction<string>) {
+    addProject: withSaveToHistory<string>((state, action) => {
       let newProject: ProjectTasksProps = {
         id: state.projects.length + 1,
         tasks: [],
@@ -49,32 +58,31 @@ const projectTasksSlice = createSlice({
         isVisible: true,
       };
       state.projects.push(newProject);
-    },
-    removeProject(state, action: PayloadAction<{ projectId: number }>) {
+    }),
+    removeProject: withSaveToHistory<{ projectId: number }>((state, action) => {
       state.projects = state.projects.filter(
         (project) => project.id !== action.payload.projectId
       );
-    },
-    addTaskToProject(
-      state,
-      action: PayloadAction<{ projectId: number; task: TaskProps }>
-    ) {
-      const { projectId, task } = action.payload;
-      const newTask: TaskProps = {
-        ...task,
-        projectId,
-      };
-      state.projects = state.projects.map((project) => {
-        if (project.id === action.payload.projectId) {
-          project.tasks.push(newTask);
-        }
-        return project;
-      });
-    },
-    deleteTaskFromProject(
-      state,
-      action: PayloadAction<{ projectId: number; taskId: number }>
-    ) {
+    }),
+    addTaskToProject: withSaveToHistory<{ projectId: number; task: TaskProps }>(
+      (state, action) => {
+        const { projectId, task } = action.payload;
+        const newTask: TaskProps = {
+          ...task,
+          projectId,
+        };
+        state.projects = state.projects.map((project) => {
+          if (project.id === action.payload.projectId) {
+            project.tasks.push(newTask);
+          }
+          return project;
+        });
+      }
+    ),
+    deleteTaskFromProject: withSaveToHistory<{
+      projectId: number;
+      taskId: number;
+    }>((state, action) => {
       state.projects = state.projects.map((project) => {
         if (project.id === action.payload.projectId) {
           project.tasks = project.tasks.filter(
@@ -83,42 +91,39 @@ const projectTasksSlice = createSlice({
         }
         return project;
       });
-    },
-    cycleTaskStatus(
-      state,
-      action: PayloadAction<{ projectId: number; taskId: number }>
-    ) {
-      state.projects = state.projects.map((project) => {
-        if (project.id === action.payload.projectId) {
-          project.tasks = project.tasks.map((task) => {
-            if (task.id === action.payload.taskId) {
-              task.status = (task.status + 1) % 3; // cycle between statuses
-              if (task.status === TaskStatus.inProgress) {
-                task.startTime = new Date();
+    }),
+
+    cycleTaskStatus: withSaveToHistory<{ projectId: number; taskId: number }>(
+      (state, action) => {
+        state.projects = state.projects.map((project) => {
+          if (project.id === action.payload.projectId) {
+            project.tasks = project.tasks.map((task) => {
+              if (task.id === action.payload.taskId) {
+                task.status = (task.status + 1) % 3; // cycle between statuses
+                if (task.status === TaskStatus.inProgress) {
+                  task.startTime = new Date();
+                }
               }
-            }
-            return task;
-          });
-        }
-        return project;
-      });
-    },
-    toggleProjectVisibility(state, action: PayloadAction<number>) {
+              return task;
+            });
+          }
+          return project;
+        });
+      }
+    ),
+    toggleProjectVisibility: withSaveToHistory<number>((state, action) => {
       state.projects = state.projects.map((project) => {
         if (project.id === action.payload) {
           project.isVisible = !project.isVisible;
         }
         return project;
       });
-    },
-    editTaskDescription(
-      state,
-      action: PayloadAction<{
-        projectId: number;
-        taskId: number;
-        description: string;
-      }>
-    ) {
+    }),
+    editTaskDescription: withSaveToHistory<{
+      projectId: number;
+      taskId: number;
+      description: string;
+    }>((state, action) => {
       state.projects = state.projects.map((project) => {
         if (project.id === action.payload.projectId) {
           project.tasks = project.tasks.map((task) => {
@@ -130,21 +135,18 @@ const projectTasksSlice = createSlice({
         }
         return project;
       });
-    },
-    changeProjectName(
-      state,
-      action: PayloadAction<{
-        projectId: number;
-        newProjectName: string;
-      }>
-    ) {
+    }),
+    changeProjectName: withSaveToHistory<{
+      projectId: number;
+      newProjectName: string;
+    }>((state, action) => {
       state.projects = state.projects.map((project) => {
         if (project.id === action.payload.projectId) {
           project.projectName = action.payload.newProjectName;
         }
         return project;
       });
-    },
+    }),
     saveStateToHistory(state) {
       if (state.history.length === MAX_HISTORY_LENGTH) {
         state.history.shift();
@@ -162,14 +164,11 @@ const projectTasksSlice = createSlice({
         state.projects = state.history.pop()!;
       }
     },
-    changeTaskDependencies(
-      state,
-      action: PayloadAction<{
-        projectId: number;
-        taskId: number;
-        leadingTaskID: number;
-      }>
-    ) {
+    changeTaskDependencies: withSaveToHistory<{
+      projectId: number;
+      taskId: number;
+      leadingTaskID: number;
+    }>((state, action) => {
       state.projects = state.projects.map((project) => {
         if (project.id === action.payload.projectId) {
           project.tasks = project.tasks.map((task) => {
@@ -181,14 +180,11 @@ const projectTasksSlice = createSlice({
         }
         return project;
       });
-    },
-    toggleTaskExpanded(
-      state,
-      action: PayloadAction<{
-        projectId: number;
-        taskId: number;
-      }>
-    ) {
+    }),
+    toggleTaskExpanded: withSaveToHistory<{
+      projectId: number;
+      taskId: number;
+    }>((state, action) => {
       state.projects = state.projects.map((project) => {
         if (project.id === action.payload.projectId) {
           project.tasks = project.tasks.map((task) => {
@@ -200,15 +196,12 @@ const projectTasksSlice = createSlice({
         }
         return project;
       });
-    },
-    reorderTasksInProject(
-      state,
-      action: PayloadAction<{
-        projectId: number;
-        sourceIndex: number;
-        destinationIndex: number;
-      }>
-    ) {
+    }),
+    reorderTasksInProject: withSaveToHistory<{
+      projectId: number;
+      sourceIndex: number;
+      destinationIndex: number;
+    }>((state, action) => {
       const { projectId, sourceIndex, destinationIndex } = action.payload;
       state.projects = state.projects.map((project) => {
         if (project.id === projectId) {
@@ -217,16 +210,13 @@ const projectTasksSlice = createSlice({
         }
         return project;
       });
-    },
-    moveTaskToBetweenProjects(
-      state,
-      action: PayloadAction<{
-        sourceProjectId: number;
-        destinationProjectId: number;
-        taskId: number;
-        destinationIndex: number;
-      }>
-    ) {
+    }),
+    moveTaskToBetweenProjects: withSaveToHistory<{
+      sourceProjectId: number;
+      destinationProjectId: number;
+      taskId: number;
+      destinationIndex: number;
+    }>((state, action) => {
       const {
         sourceProjectId,
         destinationProjectId,
@@ -247,19 +237,16 @@ const projectTasksSlice = createSlice({
         );
         destinationProject.tasks.splice(destinationIndex, 0, removedTask);
       }
-    },
-    reorderProjects(
-      state,
-      action: PayloadAction<{
-        sourceIndex: number;
-        destinationIndex: number;
-      }>
-    ) {
+    }),
+    reorderProjects: withSaveToHistory<{
+      sourceIndex: number;
+      destinationIndex: number;
+    }>((state, action) => {
       //TODO: fix changing order in case some projects are hidden
       const { sourceIndex, destinationIndex } = action.payload;
       const [removedProject] = state.projects.splice(sourceIndex, 1);
       state.projects.splice(destinationIndex, 0, removedProject);
-    },
+    }),
   },
   extraReducers(builer) {
     loadProjectTasksReducers(builer);

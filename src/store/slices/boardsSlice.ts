@@ -28,31 +28,39 @@ export interface BasicBoardsState {
   boardsData: BasicBoardProps[];
 }
 
+const withSaveToHistory = <T>(reducer: (state: BasicBoardsState, action: PayloadAction<T>) => void) => ({
+  reducer,
+  prepare: (payload: T) => ({
+    payload,
+    meta: { saveToHistory: true }
+  })
+});
+
 const boardSlice = createSlice({
   name: "boards",
   initialState: {
     boardsData: [],
   } as BasicBoardsState,
   reducers: {
-    addBoard(state, action: PayloadAction<string>) {
+    addBoard: withSaveToHistory<string>((state, action) => {
       let newBoard: BasicBoardProps = {
         id: state.boardsData.length + 1,
         boardName: action.payload,
         isVisible: false,
       };
       state.boardsData.push(newBoard);
-    },
-    removeBoard(state, action: PayloadAction<{ boardId: number }>) {
+    }),
+    removeBoard: withSaveToHistory<{ boardId: number }>((state, action) => {
       state.boardsData = state.boardsData.filter(
         (board) => board.id !== action.payload.boardId
       );
-    },
-    changeBoardVisibility(state, action: PayloadAction<{ boardId: number }>) {
+    }),
+    changeBoardVisibility: withSaveToHistory<{ boardId: number }>((state, action) => {
       const { boardId } = action.payload;
       state.boardsData.forEach((board) => {
         board.isVisible = board.id === boardId;
       });
-    },
+    }),
   },
   extraReducers(builer) {
     loadBoardDataReducers(builer);
