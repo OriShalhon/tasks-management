@@ -32,5 +32,8 @@
 }
 
 .dark-mode-switch {
-  padding: 10px 20px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 12px;
 }
