@@ -1,7 +1,14 @@
 .App {
-  & .Content {
-    display: flex;
-  }
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Full height of the viewport */
+  overflow: hidden;
+}
+
+.Content {
+  flex: 1;
+  display: flex;
+  flex-direction: row; /* Horizontal layout */
 }
 
 .input {
