@@ -160,7 +160,7 @@ const projectTasksSlice = createSlice({
       state.history.push(projectsCopy);
     },
     undo(state) {
-      if (state.history.length > 1) {
+      if (state.history.length > 0) {
         state.projects = state.history.pop()!;
       }
     },
