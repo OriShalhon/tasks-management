@@ -17,6 +17,7 @@ interface Props {
   isSideBarVisible: boolean;
   isStatisticsVisible: boolean;
   isDailyPlannerVisible: boolean;
+  canUndo: boolean;
 }
 
 const CentralComponent: React.FC<Props> = ({
@@ -24,6 +25,7 @@ const CentralComponent: React.FC<Props> = ({
   isSideBarVisible,
   isDailyPlannerVisible,
   isStatisticsVisible,
+  canUndo,
 }) => {
   const dispatch = useAppDispatch();
   const onDragEnd = (result: DropResult) => {
@@ -102,7 +104,7 @@ const CentralComponent: React.FC<Props> = ({
                 {isDailyPlannerVisible && <DailyPlanner />}
               </div>
               <button
-                className="undo-button"
+                className={canUndo ? "undo-button" : "undo-button no-history"}
                 onClick={() => dispatch(undo())}
               ></button>
               {provided.placeholder}
