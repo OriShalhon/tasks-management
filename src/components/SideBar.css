@@ -1,7 +1,6 @@
 .sidebar-content {
   flex: 0 0 250px; /* Set a fixed width for the Sidebar */
   background-color: #f1f1f1;
-  height: 100vh;
   overflow-y: auto;
   border-right: 1px solid #ccc;
   display: flex;

@@ -1,15 +1,15 @@
 .centralComponent {
-  position: relative;
   display: flex;
-  height: 100vh;
+  flex: 1;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
   transition: 350ms;
   width: 100%;
   &.large {
     margin-left: -250px;
   }
-  background-size: cover;
-  background-position: center;
-  overflow: hidden; /* Ensure the pseudo-element does not overflow the container */
 }
 
 .centralComponent::before {
