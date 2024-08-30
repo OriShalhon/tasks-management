@@ -14,7 +14,9 @@ const App: React.FC = () => {
   const projects = useAppSelector((state) => state.projectTasks.projects);
   const darkMode = useAppSelector((state) => state.app.isDarkMode);
   const basicBoardsData = useAppSelector((state) => state.boards.boardsData);
-
+  const canUndo = useAppSelector(
+    (state) => state.projectTasks.history.length > 0
+  );
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -72,6 +74,7 @@ const App: React.FC = () => {
           isSideBarVisible={isSidebarVisible}
           isStatisticsVisible={isStatisticsVisible}
           isDailyPlannerVisible={isDailyPlannerVisible}
+          canUndo={canUndo}
         />
       </div>
     </div>
