@@ -55,3 +55,11 @@
   color: white;
   border-radius: 5px;
 }
+
+.header-item {
+  &.selected {
+    background-color: teal;
+    color: #fff;
+  }
+  padding: 15px 20px;
+}

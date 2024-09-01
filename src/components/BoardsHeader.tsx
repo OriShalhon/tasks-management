@@ -49,7 +49,7 @@ const BoardsHeader: React.FC<BoardsHeaderProps> = ({
             return (
               <li
                 className={
-                  board.isVisible ? "sidebar-item selected" : "sidebar-item"
+                  board.isVisible ? "header-item selected" : "header-item"
                 }
                 key={board.id}
                 onClick={() => onChangeBoard(board.id)}
@@ -59,6 +59,7 @@ const BoardsHeader: React.FC<BoardsHeaderProps> = ({
             );
           })}
         </ul>
+
         <div
           style={{
             marginLeft: "auto",
