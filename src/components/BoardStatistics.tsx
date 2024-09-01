@@ -26,9 +26,9 @@ const BoardStatistics: React.FC<Props> = ({ projects }) => {
   const newTasks = getTaskAmountInStatus(TaskStatus.new);
   const inProgressTasks = getTaskAmountInStatus(TaskStatus.inProgress);
 
-  const finishedPercentage = Math.round(
-    (doneTasks / (doneTasks + newTasks + inProgressTasks)) * 100
-  );
+  const totalTasks = doneTasks + newTasks + inProgressTasks;
+  const finishedPercentage =
+    totalTasks === 0 ? 69 : Math.round((doneTasks / totalTasks) * 100);
 
   return (
     <div className="boardStatistics">
