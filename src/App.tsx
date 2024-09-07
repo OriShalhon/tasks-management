@@ -8,6 +8,8 @@ import SideBar from "./components/SideBar";
 import { loadBasicBoardsData } from "./store/slices/board.thunks";
 import { loadProjectTasks } from "./store/slices/projectTasks.thunks";
 
+import AddBoardModal from "./components/AddBoardModal";
+import { addBoard } from "./store/slices/boardsSlice";
 import { useAppDispatch, useAppSelector } from "./store/store";
 
 const App: React.FC = () => {
@@ -17,6 +19,7 @@ const App: React.FC = () => {
   const canUndo = useAppSelector(
     (state) => state.projectTasks.history.length > 0
   );
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -34,6 +37,7 @@ const App: React.FC = () => {
   const [isStatisticsVisible, setIsStatisticsVisible] = useState<boolean>(true);
   const [isDailyPlannerVisible, setIsDailyPlannerVisible] =
     useState<boolean>(true);
+  const [isAddBoardModalOpen, setIsAddBoardModalOpen] = useState(false);
 
   const onToggleSidebar = () => {
     setIsSidebarVisible(!isSidebarVisible);
@@ -47,6 +51,14 @@ const App: React.FC = () => {
     setIsDailyPlannerVisible(!isDailyPlannerVisible);
   };
 
+  const openAddBoardModal = () => setIsAddBoardModalOpen(true);
+  const closeAddBoardModal = () => setIsAddBoardModalOpen(false);
+
+  const handleSaveBoard = (boardName: string, boardIcon: string) => {
+    console.log(boardName, boardIcon);
+    dispatch(addBoard({ boardName, boardIcon }));
+  };
+
   return (
     <div className="App">
       <Header />
@@ -57,8 +69,13 @@ const App: React.FC = () => {
         onToggleDailyPlanner={onToggleDailyPlanner}
         isStatisticsVisible={isStatisticsVisible}
         isDailyPlannerVisible={isDailyPlannerVisible}
+        onAddBoard={openAddBoardModal}
       />
-
+      <AddBoardModal
+        isOpen={isAddBoardModalOpen}
+        onClose={closeAddBoardModal}
+        onSave={handleSaveBoard}
+      />
       <div className="App Content">
         <SideBar
           isDarkMode={darkMode}
