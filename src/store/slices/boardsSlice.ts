@@ -1,6 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
+  IoAirplaneOutline,
+  IoBicycleOutline,
   IoBriefcaseOutline,
+  IoBrushOutline,
   IoHomeOutline,
   IoSchoolOutline,
 } from "react-icons/io5";
@@ -11,6 +14,9 @@ export const iconMap: { [key: string]: React.ComponentType } = {
   work: IoBriefcaseOutline,
   school: IoSchoolOutline,
   home: IoHomeOutline,
+  travel: IoAirplaneOutline,
+  exercise: IoBicycleOutline,
+  art: IoBrushOutline,
 };
 
 export type BasicBoardProps = {
@@ -28,12 +34,14 @@ export interface BasicBoardsState {
   boardsData: BasicBoardProps[];
 }
 
-const withSaveToHistory = <T>(reducer: (state: BasicBoardsState, action: PayloadAction<T>) => void) => ({
+const withSaveToHistory = <T>(
+  reducer: (state: BasicBoardsState, action: PayloadAction<T>) => void
+) => ({
   reducer,
   prepare: (payload: T) => ({
     payload,
-    meta: { saveToHistory: true }
-  })
+    meta: { saveToHistory: true },
+  }),
 });
 
 const boardSlice = createSlice({
@@ -42,27 +50,31 @@ const boardSlice = createSlice({
     boardsData: [],
   } as BasicBoardsState,
   reducers: {
-    addBoard: withSaveToHistory<{boardName : string; boardIcon : string}>((state, action) => {
-      let newBoard: BoardProps = {
-        id: state.boardsData.length + 1,
-        boardName: action.payload.boardName,
-        icon: action.payload.boardIcon,
-        isVisible: false,
-        projects: [],
-      };
-      state.boardsData.push(newBoard);
-    }),
+    addBoard: withSaveToHistory<{ boardName: string; boardIcon: string }>(
+      (state, action) => {
+        let newBoard: BoardProps = {
+          id: state.boardsData.length + 1,
+          boardName: action.payload.boardName,
+          icon: action.payload.boardIcon,
+          isVisible: false,
+          projects: [],
+        };
+        state.boardsData.push(newBoard);
+      }
+    ),
     removeBoard: withSaveToHistory<{ boardId: number }>((state, action) => {
       state.boardsData = state.boardsData.filter(
         (board) => board.id !== action.payload.boardId
       );
     }),
-    changeBoardVisibility: withSaveToHistory<{ boardId: number }>((state, action) => {
-      const { boardId } = action.payload;
-      state.boardsData.forEach((board) => {
-        board.isVisible = board.id === boardId;
-      });
-    }),
+    changeBoardVisibility: withSaveToHistory<{ boardId: number }>(
+      (state, action) => {
+        const { boardId } = action.payload;
+        state.boardsData.forEach((board) => {
+          board.isVisible = board.id === boardId;
+        });
+      }
+    ),
   },
   extraReducers(builer) {
     loadBoardDataReducers(builer);
