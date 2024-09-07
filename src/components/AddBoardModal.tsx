@@ -14,13 +14,18 @@ const AddBoardModal: React.FC<AddBoardModalProps> = ({
   onSave,
 }) => {
   const [boardName, setBoardName] = useState("");
-  const [boardIcon, setBoardIcon] = useState("");
+  const [boardIcon, setBoardIcon] = useState("work"); // Default icon selection
 
-  if (!isOpen) return null;
+  if (!isOpen) return null; // If the modal is not open, don't render anything
 
   const handleSave = () => {
-    onSave(boardName, boardIcon);
-    onClose();
+    if (boardName.trim()) {
+      onSave(boardName, boardIcon);
+      setBoardName(""); // Reset the form fields
+      setBoardIcon("work");
+    } else {
+      alert("Board name cannot be empty.");
+    }
   };
 
   return ReactDOM.createPortal(
@@ -37,12 +42,17 @@ const AddBoardModal: React.FC<AddBoardModalProps> = ({
         </div>
         <div className="form-group">
           <label>Choose Icon:</label>
-          {/* Implement an icon picker or simple input/select for now */}
-          <input
-            type="text"
+          <select
             value={boardIcon}
             onChange={(e) => setBoardIcon(e.target.value)}
-          />
+          >
+            <option value="work">Work</option>
+            <option value="school">School</option>
+            <option value="home">Home</option>
+            <option value="travel">Travel</option>
+            <option value="exercise">Exercise</option>
+            <option value="art">Art</option>
+          </select>
         </div>
         <div className="modal-actions">
           <button onClick={onClose}>Cancel</button>
