@@ -20,6 +20,7 @@ interface BoardsHeaderProps {
   onToggleDailyPlanner: () => void;
   isStatisticsVisible: boolean;
   isDailyPlannerVisible: boolean;
+  onAddBoard: () => void;
 }
 
 const BoardsHeader: React.FC<BoardsHeaderProps> = ({
@@ -29,6 +30,7 @@ const BoardsHeader: React.FC<BoardsHeaderProps> = ({
   onToggleDailyPlanner,
   isStatisticsVisible,
   isDailyPlannerVisible,
+  onAddBoard,
 }) => {
   const dispatch = useAppDispatch();
 
@@ -59,6 +61,9 @@ const BoardsHeader: React.FC<BoardsHeaderProps> = ({
             );
           })}
         </ul>
+        <button onClick={onAddBoard} className="add-board-button">
+         + Add Board
+        </button>
 
         <div
           style={{

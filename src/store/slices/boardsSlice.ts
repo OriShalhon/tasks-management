@@ -42,11 +42,13 @@ const boardSlice = createSlice({
     boardsData: [],
   } as BasicBoardsState,
   reducers: {
-    addBoard: withSaveToHistory<string>((state, action) => {
-      let newBoard: BasicBoardProps = {
+    addBoard: withSaveToHistory<{boardName : string; boardIcon : string}>((state, action) => {
+      let newBoard: BoardProps = {
         id: state.boardsData.length + 1,
-        boardName: action.payload,
+        boardName: action.payload.boardName,
+        icon: action.payload.boardIcon,
         isVisible: false,
+        projects: [],
       };
       state.boardsData.push(newBoard);
     }),
